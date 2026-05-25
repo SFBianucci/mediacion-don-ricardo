@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background-color: #1a1a1d;
+  color: #f5f5f7;
+}
+
+/* Parpadeo de ojos — scaleY con transform-origin centrado, sincronizado */
+.blink-eye-left,
+.blink-eye-right {
+  animation: blinkEye 5.5s infinite ease-in-out;
+  transform: scaleY(0);
+}
+
+@keyframes blinkEye {
+  0%, 91%, 100% { transform: scaleY(0); }
+  94%, 96%      { transform: scaleY(1); }
+}
+
+/* Scrollbar minimal */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1a1d;
+}
+::-webkit-scrollbar-thumb {
+  background: #3a3a3f;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4a4f;
+}
+
+/* Smooth focus */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #d4a574;
+  outline-offset: 2px;
+}
