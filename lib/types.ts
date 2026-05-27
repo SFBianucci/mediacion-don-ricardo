@@ -2,7 +2,9 @@ export type EmotionalState = 0 | 1 | 2 | 3 | 4;
 
 export type GameMode = 'learning' | 'exam';
 
-export type MeetingType = 'joint' | 'private';
+export type MeetingType = 'joint' | 'private-suavecito' | 'private-florencia';
+
+export type Speaker = 'donRicardo' | 'drPerez' | 'florencia';
 
 export type QuestionType = 'circular' | 'open' | 'closed' | 'statement';
 
@@ -20,9 +22,10 @@ export interface Phase {
   title: string;
   harvardPrinciple: string;
   meetingType: MeetingType;
+  speaker: Speaker;
   privateContext?: string;
   initialAngerOnEnter?: number;
-  donRicardoLine: string;
+  speakerLine: string;
   options: Option[];
 }
 
@@ -43,4 +46,28 @@ export function getEmotionalState(anger: number): EmotionalState {
 
 export function getStateName(state: EmotionalState): string {
   return ['Receptivo', 'Neutral', 'Tenso', 'Molesto', 'Furioso'][state];
+}
+
+export function getStateNameForFlorencia(state: EmotionalState): string {
+  return ['Confiada', 'Atenta', 'Dubitativa', 'Frustrada', 'Sin paciencia'][state];
+}
+
+export function isPrivate(meetingType: MeetingType): boolean {
+  return meetingType === 'private-suavecito' || meetingType === 'private-florencia';
+}
+
+export function speakerName(speaker: Speaker): string {
+  return {
+    donRicardo: 'Don Ricardo Almeyda',
+    drPerez: 'Dr. Pérez',
+    florencia: 'Florencia Gómez',
+  }[speaker];
+}
+
+export function speakerRole(speaker: Speaker): string {
+  return {
+    donRicardo: 'Dueño de Suavecito S.A.',
+    drPerez: 'Letrado de Suavecito S.A.',
+    florencia: 'Tu clienta — consumidora',
+  }[speaker];
 }

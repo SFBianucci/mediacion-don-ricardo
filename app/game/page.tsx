@@ -4,7 +4,7 @@ import { Suspense, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import Avatar from '@/components/Avatar/Avatar';
+import MediationStage from '@/components/Avatar/MediationStage';
 import AngerMeter from '@/components/AngerMeter';
 import DialogueBox from '@/components/DialogueBox';
 import OptionsPanel from '@/components/OptionsPanel';
@@ -14,7 +14,8 @@ import FeedbackCard from '@/components/FeedbackCard';
 import PrivateMeetingModal from '@/components/PrivateMeetingModal';
 
 import { useGameState } from '@/lib/gameState';
-import { GameMode, getEmotionalState } from '@/lib/types';
+import { PHASES } from '@/lib/phases';
+import { GameMode, MeetingType, getEmotionalState, isPrivate } from '@/lib/types';
 import { saveResult } from '@/lib/storage';
 
 function GameInner() {
@@ -23,19 +24,24 @@ function GameInner() {
   const modeParam = (sp.get('mode') === 'exam' ? 'exam' : 'learning') as GameMode;
 
   const game = useGameState(modeParam);
-  const [showPrivateModal, setShowPrivateModal] = useState(false);
-  const seenPrivateRef = useRef(false);
+  const [privateModalFor, setPrivateModalFor] = useState<MeetingType | null>(null);
+  const lastPrivateRef = useRef<MeetingType | null>(null);
   const [showLeaving, setShowLeaving] = useState(false);
 
-  // Show private modal first time private meeting starts
+  // Mostrar modal cada vez que se entra a un tipo de privada distinto al anterior.
   useEffect(() => {
-    if (game.currentPhase.meetingType === 'private' && !seenPrivateRef.current) {
-      seenPrivateRef.current = true;
-      setShowPrivateModal(true);
+    const mt = game.currentPhase.meetingType;
+    if (isPrivate(mt) && lastPrivateRef.current !== mt) {
+      lastPrivateRef.current = mt;
+      setPrivateModalFor(mt);
+    }
+    if (mt === 'joint') {
+      // Volver a conjunta resetea para que un futuro caucus distinto dispare modal de nuevo.
+      lastPrivateRef.current = null;
     }
   }, [game.currentPhase.meetingType]);
 
-  // Game over via anger 100 → animate Don Ricardo leaving, then navigate
+  // Game over por anger 100
   useEffect(() => {
     if (game.gameOver) {
       const t1 = setTimeout(() => setShowLeaving(true), 1100);
@@ -55,7 +61,7 @@ function GameInner() {
     }
   }, [game.gameOver, game.mode, game.anger, game.decisions, router]);
 
-  // Finished all 8 phases → navigate
+  // Finished
   useEffect(() => {
     if (game.finished) {
       saveResult({
@@ -72,7 +78,7 @@ function GameInner() {
   const selectedOption = game.selectedOptionId
     ? game.currentPhase.options.find((o) => o.id === game.selectedOptionId)
     : null;
-  const isLastPhase = game.currentPhaseIdx === 7;
+  const isLastPhase = game.currentPhaseIdx === PHASES.length - 1;
 
   const angerBefore =
     game.decisions[game.decisions.length - 1]?.angerBefore ?? game.anger;
@@ -80,8 +86,9 @@ function GameInner() {
   return (
     <main className="min-h-screen pb-12">
       <PrivateMeetingModal
-        open={showPrivateModal}
-        onClose={() => setShowPrivateModal(false)}
+        open={privateModalFor !== null}
+        meetingType={privateModalFor ?? 'joint'}
+        onClose={() => setPrivateModalFor(null)}
       />
 
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-5 md:py-7">
@@ -115,18 +122,24 @@ function GameInner() {
               </p>
             )}
             {game.currentPhase.privateContext && (
-              <p className="text-badge-private/90 text-sm mt-1 italic">
+              <p
+                className={`text-sm mt-1 italic ${
+                  game.currentPhase.meetingType === 'private-florencia'
+                    ? 'text-badge-private-client/90'
+                    : 'text-badge-private/90'
+                }`}
+              >
                 {game.currentPhase.privateContext}
               </p>
             )}
           </motion.div>
         </AnimatePresence>
 
-        {/* Avatar + Meter */}
+        {/* Stage + Meter */}
         <div className="flex gap-3 md:gap-5 mb-5">
-          <AngerMeter anger={game.anger} />
-          <div className="flex-1 aspect-[16/10] md:aspect-[16/9] relative">
-            <Avatar
+          <AngerMeter anger={game.anger} meetingType={game.currentPhase.meetingType} />
+          <div className="flex-1 aspect-[16/10] md:aspect-[21/9] relative">
+            <MediationStage
               state={state}
               meetingType={game.currentPhase.meetingType}
               leaving={showLeaving}
@@ -143,7 +156,11 @@ function GameInner() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
           >
-            <DialogueBox text={game.currentPhase.donRicardoLine} state={state} />
+            <DialogueBox
+              text={game.currentPhase.speakerLine}
+              state={state}
+              speaker={game.currentPhase.speaker}
+            />
           </motion.div>
         </AnimatePresence>
 
@@ -152,6 +169,7 @@ function GameInner() {
           {!game.showFeedback && !game.gameOver && (
             <OptionsPanel
               options={game.currentPhase.options}
+              phaseId={game.currentPhase.id}
               mode={game.mode}
               harvardPrinciple={game.currentPhase.harvardPrinciple}
               selectedId={game.selectedOptionId}
@@ -181,7 +199,9 @@ function GameInner() {
               transition={{ delay: 0.6 }}
               className="text-center text-brand-angry mt-4 font-medium"
             >
-              Don Ricardo se levanta de la mesa…
+              {game.currentPhase.meetingType === 'private-florencia'
+                ? 'Florencia se levanta — perdiste a tu propia clienta.'
+                : 'Don Ricardo se levanta de la mesa…'}
             </motion.div>
           )}
         </div>

@@ -1,54 +1,64 @@
 export const CASE_BRIEFING = {
-  title: 'Camila Vidal vs. Almeyda Tech',
+  title: 'Florencia Gómez vs. Suavecito S.A.',
   modality: 'Audiencia de mediación prejudicial obligatoria (Ley 26.589)',
-  yourRole: 'Abogado/a de Camila Vidal (parte requirente)',
+  yourRole: 'Abogado/a de Florencia Gómez (parte requirente)',
   opposite: {
-    name: 'Ricardo Almeyda',
-    nickname: 'Don Ricardo',
-    role: 'Dueño de Almeyda Tech S.R.L.',
-    company:
-      'E-commerce argentino de electrónica y gaming. 8 años en el mercado. Empresa familiar.',
+    donRicardo: {
+      name: 'Ricardo Almeyda',
+      nickname: 'Don Ricardo',
+      role: 'Dueño de Suavecito S.A.',
+      company:
+        'Suavecito S.A. — fabricante y vendedor online de colchones. Vende exclusivamente por e-commerce. Política comercial uniforme aplicada a todos los clientes.',
+    },
+    drPerez: {
+      name: 'Dr. Pérez',
+      role: 'Letrado patrocinante de Suavecito S.A.',
+      profile:
+        'Lleva la voz técnico-jurídica del lado demandado: cláusulas, jurisprudencia, defensa procesal. Acompaña a Don Ricardo y endurece la posición cuando ve riesgo.',
+    },
   },
   facts: [
-    'El 15 de marzo, Camila Vidal compró en almeyda-tech.com.ar un monitor gamer por $1.480.000, pagando con transferencia bancaria (15% off por ese medio).',
-    'La web prometía envío en 48 hs hábiles. El monitor llegó 8 días tarde.',
-    'Al abrirlo, tenía zonas oscuras en pantallas claras y varios píxeles que no funcionaban. Camila sacó fotos y videos.',
-    'Reclamó al día siguiente por el WhatsApp Business oficial. Le contestaron 6 días después.',
-    "La empresa dijo que el monitor 'está dentro de los parámetros normales del fabricante' y ofreció $200.000 de crédito para una próxima compra. Camila no aceptó.",
-    'Camila publicó en Instagram un posteo y stories contando lo que pasó. Etiquetó a Almeyda Tech. Tuvo bastante repercusión.',
-    'Almeyda Tech le mandó carta documento intimándola a borrar todo.',
-    'Camila inició mediación prejudicial.',
+    'El 2 de mayo, Florencia Gómez compró online en suavecito.com.ar un colchón por $980.000, con tarjeta de crédito.',
+    'El colchón se entregó el 5 de mayo. Al probarlo, Florencia notó que era de espuma cuando esperaba uno de resortes (la ficha del producto era ambigua).',
+    'El 7 de mayo —dentro del plazo de 10 días corridos del Art. 34 LDC y Art. 1110 CCyCN— Florencia notificó por WhatsApp Business que ejercía el derecho de arrepentimiento y pedía reintegro a la tarjeta.',
+    'Suavecito le contestó que "por política interna" no reintegran dinero, solo entregan una Gift Card con validez de 3 meses.',
+    'Además, le exigieron que Florencia se hiciera cargo del costo del envío de devolución del colchón.',
+    'Suavecito invoca sus Términos y Condiciones como contrato de adhesión válido para denegar el reintegro a la tarjeta.',
+    'Florencia ya tuvo que comprar otro colchón en otro lado: está en plena mudanza y necesita liquidez, no un voucher.',
+    'Inició mediación prejudicial reclamando $1.350.000 (capital $980.000 + daño punitivo Art. 52 bis LDC por $370.000).',
   ],
   claim: {
-    total: 1980000,
+    total: 1350000,
     items: [
-      { concept: 'Devolución del monitor', amount: 1480000 },
-      { concept: 'Daño moral por mala atención', amount: 300000 },
-      { concept: 'Honorarios de abogada', amount: 200000 },
+      { concept: 'Reintegro del precio del colchón (Art. 34 LDC)', amount: 980000 },
+      { concept: 'Daño punitivo (Art. 52 bis LDC) por trato indigno', amount: 370000 },
     ],
   },
-  hiddenInfoAlmeydaTech: [
-    'Hay otros 3 reclamos similares en curso, del mismo lote de monitores.',
-    'Tienen stock del modelo siguiente del mismo fabricante, técnicamente superior, disponible para usar como reemplazo.',
-    'El proveedor PixelWave les debe créditos comerciales por una promoción incumplida.',
-    'Están por cerrar una ronda de inversión con un fondo que mira reputación online.',
-    'Don Ricardo reconoce off-the-record que ese lote tuvo un problema sistémico.',
+  hiddenInfoSuavecito: [
+    'La cláusula "sin reembolso a la tarjeta para compras en promoción" es la misma para todos los clientes: si la justicia la declara nula, hay riesgo de acción colectiva (Art. 55 LDC).',
+    'Tienen logística inversa propia operativa: pueden retirar el colchón sin costo extra.',
+    'El verdadero interés del lado Suavecito es preservar el flujo de caja, no el costo de la devolución puntual.',
+    'Dr. Pérez sabe que la cláusula es abusiva (Art. 37 LDC y Art. 1119 CCyCN): se cae en cualquier juicio del fuero del Consumidor.',
+    'Una condena pública con daño punitivo afectaría reputación corporativa en redes y reviews.',
   ],
-  hiddenInfoCamila: [
-    'Ya hizo denuncia paralela en Defensa del Consumidor antes de la mediación.',
-    'Aceptaría borrar el posteo y las stories si hay acuerdo digno.',
-    'MAAN: Defensa del Consumidor (gratis, sin abogado obligatorio) o juicio civil con pedido de daño punitivo (art. 52 bis Ley 24.240).',
+  hiddenInfoFlorencia: [
+    'Necesita liquidez ya: está en plena mudanza y ya pagó otro colchón con tarjeta — el cupo está bloqueado.',
+    'No quiere una Gift Card de un comercio donde no piensa volver a comprar.',
+    'Aceptaría desistir del daño punitivo si recupera capital íntegro + logística inversa sin costo para ella.',
+    'MAAN: demanda en el fuero del Consumidor de CABA (Ley 6.286/2020), gratuita para el consumidor (Art. 53 LDC) y con daño punitivo en agenda.',
+    'Debilidad del MAAN: 2 a 4 años de espera; los $980.000 se licúan por inflación.',
   ],
   positions: {
-    camila: {
-      declared: 'Cobrar los $1.980.000 íntegros',
+    florencia: {
+      declared: 'Cobrar los $1.350.000 íntegros (capital + daño punitivo)',
       interest:
-        'Que la traten como consumidora con derechos, una solución concreta, no perder más tiempo.',
+        'Recuperar el dinero a la tarjeta ya, no perder más tiempo y sentir que su derecho fue ejercido, no mendigado.',
     },
-    almeyda: {
-      declared: 'Pagar como máximo $200.000 de crédito',
+    suavecito: {
+      declared:
+        'Solo Gift Card por $980.000 con validez de 3 meses, y la clienta paga el envío de devolución',
       interest:
-        'No sentar precedente con los otros 3 reclamos del lote, no manchar la ronda de inversión, no descapitalizarse.',
+        'Preservar el flujo de caja, no sentar precedente con la cláusula de T&C, proteger la reputación corporativa.',
     },
   },
 };

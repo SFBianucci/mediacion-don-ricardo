@@ -1,10 +1,12 @@
 'use client';
 
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { GameMode, Option, QuestionType } from '@/lib/types';
 
 interface Props {
   options: Option[];
+  phaseId: number;
   mode: GameMode;
   harvardPrinciple: string;
   selectedId: string | null;
@@ -21,20 +23,35 @@ function questionTypeLabel(t: QuestionType): string {
   }[t];
 }
 
+function shuffle<T>(arr: T[]): T[] {
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
 export default function OptionsPanel({
   options,
+  phaseId,
   mode,
   harvardPrinciple,
   selectedId,
   disabled,
   onChoose,
 }: Props) {
+  // Shuffle estable por fase: el orden se baraja al entrar y se mantiene durante la fase.
+  // Intencionalmente solo dependemos de phaseId para evitar re-barajar en re-renders del padre.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const displayOptions = useMemo(() => shuffle(options), [phaseId]);
+
   return (
     <div className="space-y-2.5">
       <div className="text-text-tertiary text-xs uppercase tracking-wider mb-1">
         Elegí tu respuesta
       </div>
-      {options.map((opt, idx) => {
+      {displayOptions.map((opt, idx) => {
         const isSelected = selectedId === opt.id;
         const label = String.fromCharCode(65 + idx);
         return (

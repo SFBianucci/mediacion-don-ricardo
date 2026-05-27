@@ -20,16 +20,16 @@ function outcomeFor(anger: number, gameOver: boolean): Outcome {
     return {
       title: 'Negociación fracasada',
       summary:
-        'Don Ricardo se levantó de la mesa. No hubo acuerdo. Queda habilitada la vía judicial: denuncia en Defensa del Consumidor y/o juicio civil con pedido de daño punitivo (art. 52 bis Ley 24.240).',
+        'La mediación se cayó. Queda habilitada la vía judicial: demanda en el fuero del Consumidor de CABA (Ley 6.286/2020), gratuita para Florencia por el Art. 53 LDC, con pedido de daño punitivo (Art. 52 bis LDC) y nulidad de la cláusula 7.3 por abusiva (Art. 37 LDC, Art. 1119 CCyCN).',
       tone: 'red',
       icon: '✗',
     };
   }
   if (anger <= 35) {
     return {
-      title: 'Acuerdo integral alcanzado',
+      title: 'Acuerdo colaborativo (gana-gana)',
       summary:
-        'Don Ricardo aceptó el reemplazo por el modelo superior, una compensación parcial por las molestias y un acuerdo de confidencialidad recíproco. Ganaron los dos. Harvard puro: separaste persona y problema, fuiste a intereses, generaste opciones, usaste criterios objetivos.',
+        'Suavecito reintegró el capital íntegro a la tarjeta, asumió la logística inversa y se comprometió a revisar la cláusula 7.3. Florencia desistió del daño punitivo. Harvard puro: separaste persona y problema, comunicaste intereses, brainstorming de opciones, criterios objetivos y MAAN comunicada con firmeza.',
       tone: 'green',
       icon: '✓',
     };
@@ -38,7 +38,7 @@ function outcomeFor(anger: number, gameOver: boolean): Outcome {
     return {
       title: 'Acuerdo parcial',
       summary:
-        'Algo se firma: hubo reemplazo y una compensación menor a la pedida, con flecos abiertos sobre el posteo. Funciona en lo práctico, pero no es un acuerdo Harvard — quedó clima de regateo y resentimiento.',
+        'Algo se firma: hubo reintegro pero con costos repartidos o plazos largos, y la cláusula 7.3 quedó intacta para futuros consumidores. Funciona en lo práctico, pero no es un acuerdo Harvard — quedó clima de regateo posicional.',
       tone: 'yellow',
       icon: '≈',
     };
@@ -46,7 +46,7 @@ function outcomeFor(anger: number, gameOver: boolean): Outcome {
   return {
     title: 'Acuerdo precario',
     summary:
-      'Don Ricardo firmó a regañadientes, con un clima tenso y la sensación de haber cedido bajo presión. Alta chance de incumplimiento o de que pida revisión. La mediación cerró pero el conflicto sigue vivo.',
+      'La firma se cerró a regañadientes, con tensión instalada y la sensación de haber cedido bajo presión. Alta probabilidad de incumplimiento o pedido de revisión. La mediación cerró pero el conflicto sigue vivo.',
     tone: 'orange',
     icon: '!',
   };
@@ -83,7 +83,7 @@ export default function ResultPage() {
   const downloadSummary = () => {
     const lines: string[] = [];
     lines.push('MEDIACIÓN CON DON RICARDO — Resumen de la partida');
-    lines.push('UADE · Resolución de Controversias');
+    lines.push('Caso: Gómez c/ Suavecito S.A. — UADE, Resolución de Controversias, 1C 2026');
     lines.push('');
     lines.push(`Modo: ${data.mode === 'learning' ? 'Aprendizaje' : 'Examen'}`);
     lines.push(`Enojo final: ${data.anger} / 100 (${getStateName(state)})`);
@@ -184,9 +184,14 @@ export default function ResultPage() {
                         Fase {phase.id}
                       </span>
                       <h3 className="text-text-primary font-semibold">{phase.title}</h3>
-                      {phase.meetingType === 'private' && (
+                      {phase.meetingType === 'private-suavecito' && (
                         <span className="text-[10px] uppercase tracking-wider text-badge-private bg-badge-private/15 px-1.5 py-0.5 rounded">
-                          privada
+                          caucus · Suavecito
+                        </span>
+                      )}
+                      {phase.meetingType === 'private-florencia' && (
+                        <span className="text-[10px] uppercase tracking-wider text-badge-private-client bg-badge-private-client/15 px-1.5 py-0.5 rounded">
+                          caucus · Florencia
                         </span>
                       )}
                     </div>
@@ -246,7 +251,9 @@ export default function ResultPage() {
       </div>
 
       <footer className="mt-12 text-xs text-text-tertiary">
-        Material académico — UADE · Resolución de Controversias. Caso ficticio.
+        Material académico — Trabajo Práctico Integrador, Resolución de Controversias
+        (UADE, 1C 2026, docente Pablo Adrián Langholz). Caso ficticio basado en{' '}
+        <em>Gómez c/ Suavecito S.A.</em>
       </footer>
     </main>
   );

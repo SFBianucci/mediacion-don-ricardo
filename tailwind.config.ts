@@ -27,6 +27,7 @@ const config: Config = {
         },
         badge: {
           private: '#7a6dde',
+          'private-client': '#3aa48e',
           joint: '#5dcaa5',
         },
       },

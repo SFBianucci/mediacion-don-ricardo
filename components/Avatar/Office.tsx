@@ -1,13 +1,13 @@
 'use client';
 
-import { MeetingType } from '@/lib/types';
+import { MeetingType, isPrivate as computeIsPrivate } from '@/lib/types';
 
 interface Props {
   meetingType: MeetingType;
 }
 
 export default function Office({ meetingType }: Props) {
-  const isPrivate = meetingType === 'private';
+  const isPrivate = computeIsPrivate(meetingType);
 
   return (
     <svg

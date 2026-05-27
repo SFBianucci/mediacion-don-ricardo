@@ -22,13 +22,14 @@ export default function HomePage() {
         transition={{ duration: 0.5 }}
       >
         <div className="text-text-tertiary text-xs uppercase tracking-[0.2em] mb-3">
-          UADE · Resolución de Controversias
+          UADE · Resolución de Controversias · 1C 2026
         </div>
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
           Mediación con Don Ricardo
         </h1>
         <p className="text-text-secondary text-lg max-w-2xl">
-          Una simulación interactiva de una audiencia de mediación prejudicial,
+          Simulación interactiva de una audiencia de mediación prejudicial obligatoria
+          (Ley 26.589) sobre el derecho de arrepentimiento en el comercio electrónico,
           aplicando el método de negociación de Harvard.
         </p>
       </motion.header>
@@ -44,10 +45,14 @@ export default function HomePage() {
         <Block label="El caso">
           <p className="text-text-secondary leading-relaxed">
             <strong className="text-text-primary">{CASE_BRIEFING.title}.</strong>{' '}
-            {CASE_BRIEFING.modality}.
+            {CASE_BRIEFING.modality}. Reclamo total:{' '}
+            <strong className="text-text-primary">
+              ${CASE_BRIEFING.claim.total.toLocaleString('es-AR')}
+            </strong>{' '}
+            (capital + daño punitivo Art. 52 bis LDC).
           </p>
           <ul className="mt-3 space-y-2 text-[15px] text-text-secondary leading-relaxed list-disc list-outside ml-5">
-            {CASE_BRIEFING.facts.slice(0, 5).map((f, i) => (
+            {CASE_BRIEFING.facts.slice(0, 6).map((f, i) => (
               <li key={i}>{f}</li>
             ))}
           </ul>
@@ -56,20 +61,43 @@ export default function HomePage() {
         <Block label="Tu rol">
           <p className="text-text-secondary leading-relaxed">
             Sos <strong className="text-text-primary">{CASE_BRIEFING.yourRole}</strong>.
-            Del otro lado de la mesa está <strong className="text-text-primary">{CASE_BRIEFING.opposite.nickname}</strong>,{' '}
-            {CASE_BRIEFING.opposite.role}. {CASE_BRIEFING.opposite.company}
+            Del otro lado de la mesa están{' '}
+            <strong className="text-text-primary">
+              {CASE_BRIEFING.opposite.donRicardo.nickname}
+            </strong>{' '}
+            ({CASE_BRIEFING.opposite.donRicardo.role}) y{' '}
+            <strong className="text-text-primary">
+              {CASE_BRIEFING.opposite.drPerez.name}
+            </strong>{' '}
+            ({CASE_BRIEFING.opposite.drPerez.role}). Don Ricardo lleva el costado
+            emocional y de negocio; el Dr. Pérez aporta el blindaje técnico-jurídico.
+          </p>
+        </Block>
+
+        <Block label="Marco normativo central">
+          <p className="text-text-secondary leading-relaxed">
+            Art. 42 CN · Arts. 1092, 1093, 1097, 1100, 1105-1110, 1119 CCyCN · Arts. 4,
+            8 bis, 34, 37, 52 bis, 53, 55, 65 de la Ley 24.240 · Ley 26.589 (mediación
+            prejudicial obligatoria) · Ley 6.286/2020 (fuero del Consumidor CABA).
           </p>
         </Block>
 
         <Block label="Objetivo">
           <p className="text-text-secondary leading-relaxed">
-            Llegar a un acuerdo con Don Ricardo en 8 fases, aplicando los principios del
-            método Harvard: separar persona y problema, concentrarse en intereses,
-            generar opciones de mutuo beneficio y usar criterios objetivos.
+            Llegar a un acuerdo Harvard en <strong>15 fases</strong>: discurso de
+            apertura, reuniones conjuntas, <strong>2 caucus con Florencia</strong> (tu
+            propia clienta) y <strong>2 caucus con Suavecito</strong>, replanteo,
+            criterios objetivos, brainstorming de opciones y cierre con MAAN.
           </p>
           <p className="text-text-tertiary text-sm mt-2">
-            Vas a tomar 8 decisiones. Cada una sube o baja el enojo de Don Ricardo. Si
-            llega a 100, se levanta y no hay acuerdo.
+            Vas a tomar 15 decisiones. Cada una mueve el medidor de tensión: con
+            Suavecito mide el enojo de Don Ricardo y Dr. Pérez; en los caucus con
+            Florencia mide cuánto está perdiendo paciencia tu propia clienta. Si llega
+            a 100, se levanta y no hay acuerdo.
+          </p>
+          <p className="text-text-tertiary text-xs mt-3">
+            En cada fase las cuatro opciones se barajan: la &ldquo;mejor&rdquo;
+            respuesta no está siempre en la misma posición. Pensá antes de elegir.
           </p>
         </Block>
       </motion.section>
@@ -89,7 +117,7 @@ export default function HomePage() {
           <ModeCard
             title="Aprendizaje"
             icon="📘"
-            description="Te muestro el principio Harvard de cada opción ANTES de elegir. Ideal para entender el método mientras jugás."
+            description="Te muestro el principio Harvard y el tipo de pregunta ANTES de elegir. Ideal para entender el método mientras jugás."
             cta="Empezar en modo Aprendizaje"
             onClick={() => start('learning')}
             accent="brand-warm"
@@ -97,7 +125,7 @@ export default function HomePage() {
           <ModeCard
             title="Examen"
             icon="🎓"
-            description="Sin hints. Elegís a ciegas. El feedback completo aparece al final, fase por fase."
+            description="Sin hints. Elegís a ciegas, con las opciones barajadas. El feedback completo aparece al final, fase por fase."
             cta="Empezar en modo Examen"
             onClick={() => start('exam')}
             accent="brand-calm"
@@ -106,8 +134,10 @@ export default function HomePage() {
       </motion.section>
 
       <footer className="mt-16 pt-6 border-t border-bg-tertiary text-xs text-text-tertiary">
-        Material académico. Caso ficticio. Basado en Fisher, Ury & Patton —{' '}
-        <em>Sí... ¡de acuerdo!</em>
+        Material académico — Trabajo Práctico Integrador, Resolución de Controversias
+        (UADE, 1C 2026, docente Pablo Adrián Langholz). Caso ficticio basado en el
+        TP &ldquo;Resolución de controversias y compras online&rdquo;. Método Harvard:{' '}
+        <em>Fisher, Ury &amp; Patton — Sí… ¡de acuerdo!</em>
       </footer>
     </main>
   );
