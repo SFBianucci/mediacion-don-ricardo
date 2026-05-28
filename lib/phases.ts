@@ -60,42 +60,42 @@ export const PHASES: Phase[] = [
     playerRole: 'mediador',
     meetingType: 'joint',
     speaker: 'mediator',
-    title: 'Le toca a Florencia narrar',
+    title: 'Arranca la reunión conjunta inicial',
     situation:
-      'Resuelta la cuestión inicial, las cuatro personas alrededor de la mesa esperan. Florencia te mira. Es la parte requirente — le corresponde a ella empezar.',
+      'Terminaste el discurso de apertura: explicaste brevemente en qué consiste el proceso, sus etapas y las reglas. Las cuatro personas están alrededor de la mesa, listas. ¿Qué te falta para que empiece a fluir el relato?',
     options: [
       {
         id: '2A',
-        text: 'Florencia, te escucho. Contame con tus palabras qué pasó.',
+        text: 'Hacer una pregunta abierta para que la parte cuente su versión con sus palabras.',
         deltas: { climate: -8, donRicardo: 0, florencia: -10 },
         feedback:
-          'Pregunta abierta de manual: invita al relato sin condicionar la respuesta, sin pedirle una solución todavía, sin meter contenido propio. Florencia se siente escuchada.',
+          'La pregunta abierta es la herramienta de la reunión conjunta inicial: invita a narrar sin condicionar la respuesta ni meter contenido propio. Es lo que abre el relato y hace que la parte se sienta escuchada.',
         isBest: true,
         technique: 'pregunta-abierta',
       },
       {
         id: '2B',
-        text: 'Florencia, ¿es cierto que reclamaste a los dos días de recibido el colchón?',
-        deltas: { climate: 5, donRicardo: 0, florencia: 8 },
+        text: 'Darle la palabra a Florencia porque, al ser la requirente, le corresponde empezar.',
+        deltas: { climate: 6, donRicardo: 2, florencia: 8 },
         feedback:
-          'Confirmaste un dato técnico con pregunta cerrada antes de escuchar el relato. Es el dato dirimente, sí — pero confirmarlo va en la privada. Florencia se siente interrogada y no narrada.',
-        technique: 'pregunta-cerrada',
+          'Pensar en "a quién le toca" es mecánico. El relato no arranca porque sea "su turno", sino porque vos abrís el espacio con una pregunta abierta. La herramienta importa más que el orden.',
+        technique: 'esquive',
       },
       {
         id: '2C',
-        text: 'Florencia, contanos qué solución te parecería justa para esta situación.',
-        deltas: { climate: 8, donRicardo: 3, florencia: 6 },
+        text: 'Legitimar a los abogados presentes y reforzar la confianza institucional.',
+        deltas: { climate: 8, donRicardo: 3, florencia: 5 },
         feedback:
-          'Pediste una solución antes del relato. La generación de opciones es etapa posterior, post-privadas. Florencia se ancla en una cifra antes de explorar nada y vos perdiste la ventana para escucharla.',
+          'La legitimación y el empowerment van en el discurso de apertura — que ya terminaste. Repetirlo ahora dilata y suena a relleno. Cada herramienta tiene su momento.',
         technique: 'esquive',
       },
       {
         id: '2D',
-        text: 'Florencia, sé breve si podés: la otra parte tiene mucho para contestar.',
-        deltas: { climate: 12, donRicardo: -2, florencia: 14 },
+        text: 'Proponerles un ejercicio de respiración para que arranquen relajados, total además de mediador/a sos coach.',
+        deltas: { climate: 15, donRicardo: 14, florencia: 4 },
         feedback:
-          'Le metiste presión temporal a la parte requirente en el momento que justamente tiene que sentirse escuchada. La escucha activa se cae antes de empezar.',
-        technique: 'carga-emocional',
+          'Sos mediador/a, no coach. Don Ricardo te mira como si estuvieras de joda y perdés autoridad sobre el proceso. (Igual, respirá vos.)',
+        technique: 'esquive',
       },
     ],
   },
@@ -140,7 +140,7 @@ export const PHASES: Phase[] = [
       },
       {
         id: '3D',
-        text: 'Gracias Florencia, escuchamos. Pasemos al lado de Suavecito.',
+        text: 'Gracias Florencia, escuchamos. Ahora escuchemos a Don Ricardo.',
         deltas: { climate: 18, donRicardo: -3, florencia: 18 },
         feedback:
           'No verificaste que entendiste. Florencia no sabe si la oíste; si entendiste mal lo arrastrás toda la mediación. La parte requirente tiene derecho a confirmar que llegó su versión.',
