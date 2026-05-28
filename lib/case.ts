@@ -96,3 +96,92 @@ export const PROCESO_ETAPAS = [
   { num: 7, key: 'criterios-objetivos', label: 'Criterios objetivos', desc: 'Anclar el acuerdo en normas y estándares externos' },
   { num: 8, key: 'acuerdo', label: 'Acuerdo', desc: 'Redacción Harvard de la cláusula final' },
 ];
+
+// Las 4 opciones de mutuo beneficio del PDF del TP (fase 10 de brainstorming)
+// La opción D es la Harvard plena (gana-gana) — combina los intereses reales de ambas partes.
+export const OPCIONES_MUTUO_BENEFICIO = [
+  {
+    id: 'mb-A',
+    text: 'Devolución del dinero en un pago único al medio de pago original, pero el envío de devolución queda a cargo de Florencia.',
+  },
+  {
+    id: 'mb-B',
+    text: 'Devolución en cuotas, pero Florencia no se hace cargo del envío.',
+  },
+  {
+    id: 'mb-C',
+    text: 'Gift Card por el monto total con validez extendida a 12 meses y envío a cargo de la empresa.',
+  },
+  {
+    id: 'mb-D',
+    text: 'Devolución del dinero más un cupón de descuento para futura compra, a cambio de que Florencia desista del daño punitivo.',
+  },
+];
+
+// Cláusulas del acuerdo final, condicionadas a la opción elegida en la fase 10.
+// Cada entrada describe cómo queda redactado el acuerdo según la elección del jugador.
+export interface AcuerdoVariante {
+  tono: 'colaborativo' | 'parcial' | 'subóptimo' | 'precario';
+  preludio: string;
+  clausulas: string[];
+  cierre: string;
+}
+
+export const ACUERDO_VARIANTES: Record<string, AcuerdoVariante> = {
+  'mb-D': {
+    tono: 'colaborativo',
+    preludio:
+      'Las partes, asistidas por sus letrados y en presencia del/la mediador/a interviniente, llegan a un acuerdo colaborativo en los términos del método Harvard. Se conviene lo siguiente:',
+    clausulas: [
+      'PRIMERA — SUAVECITO S.A. reintegra a la Sra. Florencia GÓMEZ la suma de pesos novecientos ochenta mil ($980.000) al medio de pago original (tarjeta de crédito), dentro de los diez (10) días hábiles de suscripto el presente acuerdo.',
+      'SEGUNDA — La logística inversa del producto queda a cargo exclusivo de SUAVECITO S.A., sin costo alguno para la requirente, dentro de los cinco (5) días hábiles posteriores a la firma.',
+      'TERCERA — SUAVECITO S.A. entrega a la requirente un cupón de descuento del veinte por ciento (20%) para una futura compra, con validez de doce (12) meses, en reconocimiento del trato recibido.',
+      'CUARTA — La requirente desiste expresa y formalmente de la acción por daño punitivo (Art. 52 bis Ley 24.240) por los hechos materia de esta mediación.',
+      'QUINTA — SUAVECITO S.A. se compromete a la revisión de la cláusula 7.3 de sus Términos y Condiciones a fin de adecuarla a los Arts. 34 y 37 de la Ley 24.240.',
+      'SEXTA — El presente acuerdo tiene efecto cancelatorio total respecto del reclamo objeto de esta mediación.',
+    ],
+    cierre:
+      'Ambas partes salen satisfechas en sus intereses: Florencia recupera liquidez inmediata, ve reconocido su reclamo como ejercicio de un derecho y obtiene un gesto comercial. Suavecito protege el flujo de caja, cierra el riesgo del daño punitivo y resguarda su reputación corporativa. Gana-gana.',
+  },
+  'mb-A': {
+    tono: 'parcial',
+    preludio:
+      'Las partes llegan a un acuerdo que resuelve el aspecto patrimonial central, pero deja costos del lado de la requirente. Se conviene:',
+    clausulas: [
+      'PRIMERA — SUAVECITO S.A. reintegra a Florencia GÓMEZ la suma de pesos novecientos ochenta mil ($980.000) al medio de pago original, en un pago único, dentro de los diez (10) días hábiles.',
+      'SEGUNDA — El costo del envío de devolución del colchón queda a cargo exclusivo de la requirente.',
+      'TERCERA — La requirente desiste de la acción por daño punitivo (Art. 52 bis Ley 24.240).',
+      'CUARTA — La cláusula 7.3 de los T&C de SUAVECITO S.A. no es objeto de este acuerdo.',
+      'QUINTA — El presente acuerdo tiene efecto cancelatorio respecto del reclamo.',
+    ],
+    cierre:
+      'Florencia recupera el dinero pero asume un costo que el Art. 34 LDC ponía sobre el proveedor. La cláusula abusiva sigue vigente para futuros consumidores. Acuerdo aceptable pero no Harvard pleno.',
+  },
+  'mb-B': {
+    tono: 'subóptimo',
+    preludio:
+      'Las partes acuerdan una devolución en cuotas con la logística por cuenta de la empresa. Se conviene:',
+    clausulas: [
+      'PRIMERA — SUAVECITO S.A. reintegra a Florencia GÓMEZ la suma de pesos novecientos ochenta mil ($980.000) en tres (3) cuotas mensuales, iguales y consecutivas.',
+      'SEGUNDA — La logística inversa queda a cargo de SUAVECITO S.A., sin costo para la requirente.',
+      'TERCERA — La requirente desiste de la acción por daño punitivo (Art. 52 bis Ley 24.240).',
+      'CUARTA — La cláusula 7.3 de los T&C no se modifica.',
+      'QUINTA — El presente acuerdo tiene efecto cancelatorio respecto del reclamo.',
+    ],
+    cierre:
+      'Florencia cobra pero pierde frente a la inflación —su interés real era liquidez ahora. La empresa preserva su flujo de caja a costa del cliente. Acuerdo competitivo disfrazado.',
+  },
+  'mb-C': {
+    tono: 'precario',
+    preludio:
+      'Las partes acuerdan una solución basada en Gift Card. Se conviene:',
+    clausulas: [
+      'PRIMERA — SUAVECITO S.A. entrega a Florencia GÓMEZ una Gift Card por el monto total del producto ($980.000), con validez de doce (12) meses.',
+      'SEGUNDA — La logística inversa queda a cargo de SUAVECITO S.A.',
+      'TERCERA — La requirente desiste de toda acción incluyendo el daño punitivo.',
+      'CUARTA — La cláusula 7.3 queda implícitamente convalidada por este acuerdo.',
+    ],
+    cierre:
+      'Florencia no recupera dinero: queda atada a comprar en un comercio donde no piensa volver. El Art. 34 LDC quedó desactivado por vía contractual. Acuerdo precario: si se incumple, el contracargo a tarjeta ya no es posible.',
+  },
+};

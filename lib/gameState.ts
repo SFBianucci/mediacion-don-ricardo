@@ -21,7 +21,9 @@ export function useGameState(mode: GameMode) {
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [gameOverReason, setGameOverReason] = useState<GameOverReason>(null);
+  const [showingAcuerdo, setShowingAcuerdo] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [lastChoiceId, setLastChoiceId] = useState<string | null>(null);
 
   const currentPhase = PHASES[currentPhaseIdx];
 
@@ -38,6 +40,7 @@ export function useGameState(mode: GameMode) {
       setMeters(after);
       setSelectedOptionId(optionId);
       setShowFeedback(true);
+      setLastChoiceId(optionId);
       setDecisions((d) => [
         ...d,
         {
@@ -67,9 +70,15 @@ export function useGameState(mode: GameMode) {
     if (currentPhaseIdx < PHASES.length - 1) {
       setCurrentPhaseIdx((i) => i + 1);
     } else {
-      setFinished(true);
+      // Última fase terminada sin game-over → mostrar pantalla del acuerdo
+      setShowingAcuerdo(true);
     }
   }, [currentPhaseIdx]);
+
+  const proceedToResult = useCallback(() => {
+    setShowingAcuerdo(false);
+    setFinished(true);
+  }, []);
 
   return {
     mode,
@@ -81,9 +90,12 @@ export function useGameState(mode: GameMode) {
     selectedOptionId,
     gameOver,
     gameOverReason,
+    showingAcuerdo,
     finished,
+    lastChoiceId,
     chooseOption,
     nextPhase,
+    proceedToResult,
     progress: { current: currentPhaseIdx + 1, total: PHASES.length },
   };
 }

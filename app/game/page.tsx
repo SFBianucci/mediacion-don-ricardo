@@ -14,6 +14,7 @@ import RoleBanner from '@/components/RoleBanner';
 import PhaseProgress from '@/components/PhaseProgress';
 import FeedbackCard from '@/components/FeedbackCard';
 import PrivateMeetingModal from '@/components/PrivateMeetingModal';
+import AcuerdoFinal from '@/components/AcuerdoFinal';
 
 import { useGameState } from '@/lib/gameState';
 import { PHASES } from '@/lib/phases';
@@ -90,6 +91,17 @@ function GameInner() {
     ? game.currentPhase.options.find((o) => o.id === game.selectedOptionId)
     : null;
   const isLastPhase = game.currentPhaseIdx === PHASES.length - 1;
+
+  // Pantalla del acuerdo final: si terminó el juego sin game-over, mostrar el acta
+  // antes de redirigir a /result.
+  if (game.showingAcuerdo) {
+    return (
+      <AcuerdoFinal
+        optionId={game.lastChoiceId}
+        onContinue={game.proceedToResult}
+      />
+    );
+  }
 
   const lastDecision = game.decisions[game.decisions.length - 1];
   const metersBefore = lastDecision?.metersBefore ?? game.meters;

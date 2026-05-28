@@ -128,9 +128,12 @@ export default function HomePage() {
             </li>
           </ul>
           <p className="text-text-tertiary text-sm mt-3">
-            Son 15 decisiones a lo largo de las 8 etapas. Si cualquiera de los tres
+            Son 10 decisiones a lo largo del proceso. Si cualquiera de los tres
             medidores llega a 100, la mediación se cae. Cada fase baraja sus 4
-            opciones: la mejor respuesta no está siempre en la misma posición.
+            opciones: la mejor respuesta no está siempre en la misma posición, y
+            las distractoras suenan razonables — la diferencia está en sutilezas.
+            Al final, si llegás a acuerdo, vas a leer el acta firmada con sus
+            cláusulas.
           </p>
         </Block>
       </motion.section>

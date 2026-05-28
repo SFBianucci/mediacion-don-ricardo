@@ -1,721 +1,497 @@
 import { Phase } from './types';
+import { OPCIONES_MUTUO_BENEFICIO } from './case';
 
 export const PHASES: Phase[] = [
   // ─────────────────────────────────────────────────────────────────────
-  // ETAPA 1 — DISCURSO DE APERTURA
+  // FASE 1 — REUNIÓN CONJUNTA INICIAL · MEDIADOR · pregunta abierta a Florencia
   // ─────────────────────────────────────────────────────────────────────
   {
     id: 1,
-    stage: 'apertura',
+    stage: 'conjunta-inicial',
     playerRole: 'mediador',
     meetingType: 'joint',
     speaker: 'mediator',
-    title: 'Tu primera intervención: legitimación y empowerment',
+    title: 'Le toca a Florencia narrar',
     situation:
-      'Es la primera audiencia. Florencia, su abogada (Dra. López), Don Ricardo y el Dr. Pérez ya están conectados. Te miran todos. Es tu primera intervención como mediador/a. ¿Cómo abrís?',
+      'Terminaste el discurso de apertura. Las cuatro personas alrededor de la mesa esperan. Florencia te mira. Es la parte requirente — le corresponde a ella empezar.',
     options: [
       {
         id: '1A',
-        text: 'Buenas tardes. Soy mediador/a habilitado/a por el Ministerio de Justicia, inscripto en el Registro Nacional de Mediación. Antes que nada quiero agradecerles que estén acá. Mi rol es facilitar el diálogo, no decidir ni asesorar — para eso ya cuentan con sus abogados, la Dra. López y el Dr. Pérez, que son profesionales con todo el conocimiento técnico del caso. Vamos a trabajar juntos.',
-        deltas: { climate: -10, donRicardo: -5, florencia: -5 },
+        text: 'Florencia, te escucho. Contame con tus palabras qué pasó.',
+        deltas: { climate: -8, donRicardo: 0, florencia: -10 },
         feedback:
-          'Legitimación + empowerment Harvard. Citaste tu habilitación (genera confianza institucional), agradeciste la presencia (crea clima cálido) y empoderaste a los letrados nombrándolos. Las dos partes se sienten respaldadas. Apertura impecable.',
+          'Pregunta abierta de manual: invita al relato sin condicionar la respuesta, sin pedirle una solución todavía, sin meter contenido propio. Florencia se siente escuchada. Eso te alcanza para que ella se explaye.',
         isBest: true,
-        technique: 'legitimacion',
+        technique: 'pregunta-abierta',
       },
       {
         id: '1B',
-        text: 'Bueno, vamos al grano. Florencia, ¿cuál es el monto que querés cobrar? Don Ricardo, ¿cuánto está dispuesto a pagar?',
-        deltas: { climate: 18, donRicardo: 8, florencia: 12 },
+        text: 'Florencia, ¿es cierto que reclamaste a los dos días de recibido el colchón?',
+        deltas: { climate: 5, donRicardo: 0, florencia: 8 },
         feedback:
-          'Mediación express mal hecha: ni te presentaste, ni explicaste tu rol, ni generaste clima. Saltaste a la negociación posicional sin discurso de apertura. Las partes no saben quién sos ni qué reglas rigen.',
-        technique: 'esquive',
+          'Confirmaste un dato técnico con pregunta cerrada antes de escuchar el relato. Es el dato dirimente, sí — pero confirmarlo va en la privada. Florencia se siente interrogada y no narrada.',
+        technique: 'pregunta-cerrada',
       },
       {
         id: '1C',
-        text: 'Buenas. Antes de empezar quiero dejar claro que esto no es un juicio: yo no soy juez, no voy a sancionar a nadie. Acá venimos a entendernos. ¿Listo Don Ricardo? Vamos a tratar de que esto termine bien y rápido.',
-        deltas: { climate: 8, donRicardo: -2, florencia: 10 },
+        text: 'Florencia, contanos qué solución te parecería justa para esta situación.',
+        deltas: { climate: 8, donRicardo: 3, florencia: 6 },
         feedback:
-          'Te dirigiste solo a Don Ricardo en la apertura. Florencia se siente invisibilizada por el mediador que debería ser imparcial. Y "que termine bien y rápido" suena a presión para acordar — el principio del Art. 7 inc. b es voluntariedad.',
-        technique: 'perdida-imparcialidad',
-      },
-      {
-        id: '1D',
-        text: 'Buenas tardes a todos. Soy el/la mediador/a designado/a. Antes de empezar quiero adelantarles mi opinión: el Art. 34 LDC es claro, así que les sugiero a Suavecito que acepte el reintegro y ahorremos tiempo.',
-        deltas: { climate: 35, donRicardo: 25, florencia: -5 },
-        feedback:
-          'Pérdida total de imparcialidad. Adelantaste opinión jurídica antes de escuchar a las partes. Don Ricardo y el Dr. Pérez quedan posicionados como "los que están equivocados". Como mediador no asesorás, no opinás sobre el fondo. El proceso quedó viciado.',
-        technique: 'perdida-imparcialidad',
-      },
-    ],
-  },
-  {
-    id: 2,
-    stage: 'apertura',
-    playerRole: 'mediador',
-    meetingType: 'joint',
-    speaker: 'mediator',
-    title: 'Principios del Art. 7 y agenda de trabajo',
-    situation:
-      'Hiciste la presentación. Ahora te toca explicar las reglas del juego: los principios del Art. 7 de la Ley 26.589 y la agenda de los temas a tratar. Es tu segundo bloque dentro del discurso de apertura.',
-    options: [
-      {
-        id: '2A',
-        text: 'Esta mediación se rige por la Ley 26.589 y sus principios: imparcialidad mía, voluntariedad de ustedes para participar, igualdad de las partes, confidencialidad de todo lo que se diga, y promoción de la comunicación directa. La agenda la vamos a armar entre todos, pero les propongo arrancar por el ejercicio del derecho de arrepentimiento, después la logística y el reintegro, y por último el daño punitivo. ¿Les parece?',
-        deltas: { climate: -8, donRicardo: -5, florencia: -5 },
-        feedback:
-          'Enunciaste los principios del Art. 7 con vocabulario coloquial pero técnico, y planteaste una agenda lógica de temas sucesivos (no tiene sentido discutir el monto si antes no se establece si el derecho se ejerció en plazo). Cerraste con pregunta abierta para que las partes participen del armado de la agenda. Harvard puro.',
-        isBest: true,
-        technique: 'empowerment',
-      },
-      {
-        id: '2B',
-        text: 'Bueno, las reglas son las de siempre: confidencialidad y respeto. Vamos a discutir el monto del reclamo, que es de $1.350.000.',
-        deltas: { climate: 12, donRicardo: 5, florencia: 8 },
-        feedback:
-          'Saltaste 5 principios del Art. 7 y comprimiste todo en "confidencialidad y respeto". Además anclaste la agenda en el monto — empezás por el final, sin haber establecido si el derecho de arrepentimiento se ejerció válidamente en término. La agenda mal armada arrastra toda la mediación.',
+          'Pediste una solución antes del relato. La generación de opciones es etapa posterior, post-privadas. Acá Florencia se ancla en una cifra antes de explorar nada, y vos perdiste la ventana para escucharla.',
         technique: 'esquive',
       },
       {
-        id: '2C',
-        text: 'Quiero recordarles algo importante: lo que digan acá puede usarse después en juicio si esto termina mal, así que cuidado con lo que confiesan.',
-        deltas: { climate: 40, donRicardo: 18, florencia: 18 },
+        id: '1D',
+        text: 'Florencia, sé breve si podés: la otra parte tiene mucho para contestar.',
+        deltas: { climate: 12, donRicardo: -2, florencia: 14 },
         feedback:
-          'Violación grave del principio de confidencialidad (Art. 7 inc. e y Art. 8 de la ley). Lo que se dice en mediación NO puede usarse en juicio, justamente para fomentar la comunicación directa. Le pasaste el mensaje opuesto a las partes y les acabás de cerrar la boca a las dos.',
-        technique: 'violacion-confidencialidad',
+          'Le metiste presión temporal a la parte requirente en el momento que justamente tiene que sentirse escuchada. La escucha activa se cae antes de empezar.',
+        technique: 'carga-emocional',
+      },
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────────
+  // FASE 2 — REUNIÓN CONJUNTA INICIAL · MEDIADOR · parafraseo
+  // ─────────────────────────────────────────────────────────────────────
+  {
+    id: 2,
+    stage: 'conjunta-inicial',
+    playerRole: 'mediador',
+    meetingType: 'joint',
+    speaker: 'florencia',
+    speakerLine:
+      'El 2 de mayo les compré online un colchón por $980.000. Llegó el día 5 y al probarlo era todo espuma, parecía de resortes en la foto. El 7 les escribí pidiendo la devolución del dinero, dentro del plazo legal. Me contestaron que "por política interna" solo me daban una Gift Card de 3 meses, y que el envío de devolución lo pagaba yo. Me sentí estafada — la ley dice que puedo arrepentirme y que el dinero vuelve a la tarjeta.',
+    title: 'El relato de Florencia',
+    options: [
+      {
+        id: '2A',
+        text: 'A ver si entendí: comprás online el 2, recibís el 5, y dentro del plazo legal notificás que querés ejercer el arrepentimiento. La respuesta que recibiste no contempla la devolución al medio de pago original. ¿Es así?',
+        deltas: { climate: -10, donRicardo: -8, florencia: -10 },
+        feedback:
+          'Reformulaste los hechos sin la carga emocional ("me sentí estafada"), sin afirmarlos como ciertos, y cerraste con verificación. Las dos partes lo escuchan como neutral.',
+        isBest: true,
+        technique: 'parafraseo',
+      },
+      {
+        id: '2B',
+        text: 'Florencia, lo que cuenta encuadra en el supuesto del Art. 34 LDC y el incumplimiento del Art. 1110 CCyCN. ¿Es eso lo que reclamás?',
+        deltas: { climate: 28, donRicardo: 22, florencia: -5 },
+        feedback:
+          'Eso no es reformular: es opinar. Adelantaste conclusión jurídica frente a la otra parte. Don Ricardo y el Dr. Pérez te miran como si fueras el abogado contrario.',
+        technique: 'perdida-imparcialidad',
+      },
+      {
+        id: '2C',
+        text: 'Florencia, usted se sintió estafada porque la trataron como una molestia y le quisieron meter un voucher en vez de devolverle la plata. ¿Cierto?',
+        deltas: { climate: 16, donRicardo: 14, florencia: -2 },
+        feedback:
+          'Repetiste las cargas emocionales en vez de neutralizarlas. La reformulación despega el relato de las emociones; vos hiciste lo contrario y Don Ricardo se cierra.',
+        technique: 'carga-emocional',
       },
       {
         id: '2D',
-        text: 'Vamos a empezar por el daño punitivo. Es el tema más importante y de ahí se desprende todo lo demás.',
-        deltas: { climate: 18, donRicardo: 15, florencia: 5 },
+        text: 'Gracias Florencia, escuchamos. Pasemos al lado de Suavecito.',
+        deltas: { climate: 18, donRicardo: -3, florencia: 18 },
         feedback:
-          'Agenda invertida: el daño punitivo es la consecuencia del incumplimiento, no la causa. Si no establecemos primero que el derecho se ejerció en plazo y que la cláusula de Suavecito es nula, discutir el punitivo es discutir el aire. Don Ricardo se planta porque ve la amenaza encima sin haber explorado nada.',
+          'No verificaste que entendiste. Florencia no sabe si la oíste; si entendiste mal lo arrastrás toda la mediación. La parte requirente tiene derecho a confirmar que llegó su versión.',
         technique: 'esquive',
       },
     ],
   },
 
   // ─────────────────────────────────────────────────────────────────────
-  // ETAPA 2 — REUNIÓN CONJUNTA INICIAL
+  // FASE 3 — REUNIÓN CONJUNTA INICIAL · MEDIADOR · pregunta abierta a Suavecito
   // ─────────────────────────────────────────────────────────────────────
   {
     id: 3,
     stage: 'conjunta-inicial',
     playerRole: 'mediador',
     meetingType: 'joint',
-    speaker: 'mediator',
-    title: 'Pregunta abierta a Florencia',
-    situation:
-      'Cerraste el discurso de apertura. Ahora le toca a la parte requirente narrar. Tenés que invitar a Florencia a contar su versión. ¿Qué tipo de pregunta usás?',
+    speaker: 'donRicardo',
+    speakerLine:
+      'Doctor/a, le voy a ser franco. Hace doce años que tengo Suavecito y no soy ningún estafador. La señora compró un colchón, lo durmió tres noches y ahora viene con esta historia de la "espuma". Las cosas se ven en la foto. La Gift Card es lo que damos a todos. Yo no voy a regalar plata porque alguien se arrepintió.',
+    title: 'El relato de Don Ricardo',
     options: [
       {
         id: '3A',
-        text: 'Florencia, contame con tus palabras qué fue lo que te trajo hasta acá. ¿Qué solución te parecería justa para esta situación?',
-        deltas: { climate: -8, donRicardo: 0, florencia: -10 },
+        text: 'Don Ricardo, lo escucho. ¿Qué opciones tiene Suavecito para resolver esto sin afectar su operación?',
+        deltas: { climate: -10, donRicardo: -10, florencia: 0 },
         feedback:
-          'Pregunta abierta perfecta. No condicionás la respuesta, no metés palabras en la boca de Florencia, y al pedirle "qué solución te parecería justa" ya empezás a indagar interés sin que ella se dé cuenta. Florencia siente que la escuchan en serio. Es la pregunta canónica de apertura de la conjunta inicial.',
+          'Pregunta abierta + semilla del interés ("sin afectar la operación"). Le mostraste que entendés que la empresa tiene preocupaciones reales, sin tomar partido. Don Ricardo baja un cambio.',
         isBest: true,
         technique: 'pregunta-abierta',
       },
       {
         id: '3B',
-        text: 'Florencia, ¿es verdad que vos compraste el colchón el 2 de mayo y reclamaste el 7 de mayo?',
-        deltas: { climate: 5, donRicardo: 0, florencia: 8 },
+        text: 'Don Ricardo, antes de que avance: ¿usted está al tanto de las obligaciones que el Art. 34 LDC pone sobre el vendedor en este tipo de operaciones?',
+        deltas: { climate: 32, donRicardo: 26, florencia: -3 },
         feedback:
-          'Pregunta cerrada en el momento equivocado. En la conjunta inicial buscás que la parte se explaye libremente — la pregunta cerrada va después, en privada, cuando ya necesitás confirmar datos puntuales. Acá Florencia te da un sí/no y se queda con cosas adentro.',
-        technique: 'pregunta-cerrada',
+          'Pregunta cerrada acusatoria, aunque la envuelvas de cortesía. El mediador no asesora ni acusa. Don Ricardo siente que ya hay sentencia.',
+        technique: 'acusacion',
       },
       {
         id: '3C',
-        text: 'Florencia, ¿cómo creés que se sentiría Don Ricardo si todos sus clientes le pidieran el reintegro como vos?',
-        deltas: { climate: 15, donRicardo: 8, florencia: 18 },
+        text: 'Don Ricardo, ¿cómo se imagina que se vería Suavecito frente a otros clientes si esta historia se hace pública?',
+        deltas: { climate: 18, donRicardo: 14, florencia: 4 },
         feedback:
-          'Pregunta circular fuera de lugar. Las circulares son potentes pero van en privada, donde la parte se siente segura. En la conjunta inicial le pediste a Florencia que se ponga en el lugar de Don Ricardo antes de haber contado siquiera su lado. Se siente cuestionada por el propio mediador.',
+          'Pregunta circular en momento equivocado. Estas funcionan en privada, donde la parte no se expone. En conjunta, Don Ricardo siente presión frente a la contraparte y se atrinchera.',
         technique: 'pregunta-circular',
       },
       {
         id: '3D',
-        text: 'Florencia, contame qué pasó. Pero te aviso: tratá de ser breve porque tenemos mucho que ver.',
-        deltas: { climate: 14, donRicardo: -2, florencia: 16 },
+        text: 'Don Ricardo, le toca a usted. Pero le pido brevedad: la situación ya quedó bastante clara con el relato anterior.',
+        deltas: { climate: 22, donRicardo: 24, florencia: -2 },
         feedback:
-          'Empezaste bien (pregunta abierta) y arruinaste la apertura con la advertencia. Le pasaste a Florencia el mensaje de que su relato te molesta. La escucha activa se cae antes de empezar.',
-        technique: 'carga-emocional',
-      },
-    ],
-  },
-  {
-    id: 4,
-    stage: 'conjunta-inicial',
-    playerRole: 'mediador',
-    meetingType: 'joint',
-    speaker: 'florencia',
-    speakerLine:
-      'El 2 de mayo compré online un colchón a estos señores por $980.000. Llegó el 5 y no era lo que yo esperaba — vendían un colchón que parecía de resortes y era todo espuma. El 7 les escribí por WhatsApp pidiendo la devolución del dinero, dentro del plazo legal. Me dijeron que "por política interna" no me devolvían nada, solo una Gift Card de 3 meses. Encima me querían cobrar a mí el envío de la devolución. Me sentí estafada. La ley dice que tengo derecho a arrepentirme y que el dinero vuelve a la tarjeta.',
-    title: 'Parafraseo del relato de Florencia',
-    options: [
-      {
-        id: '4A',
-        text: 'A ver si entendí bien, Florencia: vos comprás el colchón el 2 de mayo de manera online, lo recibís el 5, y a los dos días, dentro del plazo legal, le notificás a Suavecito que querés ejercer el derecho de arrepentimiento. Te ofrecieron alternativas que no contemplaban la devolución del dinero al medio de pago original y te trasladaron a vos los gastos de envío. ¿Es así? ¿Querés agregar algo más?',
-        deltas: { climate: -10, donRicardo: -8, florencia: -10 },
-        feedback:
-          'Parafraseo Harvard impecable. Repetiste los hechos centrales con tus palabras, en orden, sin la carga emocional ("me sentí estafada"). No afirmaste como cierto lo que ella dijo (usaste "vos comprás", "te ofrecieron"). Cerraste con la fórmula canónica "¿es así? ¿querés agregar algo más?". Florencia se siente escuchada Y Don Ricardo siente que no opinaste sobre el fondo — quedaste imparcial.',
-        isBest: true,
-        technique: 'parafraseo',
-      },
-      {
-        id: '4B',
-        text: 'Florencia, claramente lo que cuenta usted muestra que Suavecito violó el Art. 34 LDC. ¿Es así?',
-        deltas: { climate: 35, donRicardo: 25, florencia: -8 },
-        feedback:
-          'Eso no es parafraseo — es opinión jurídica del mediador. Adelantaste el resultado y le diste a Florencia un parafraseo a su favor. Don Ricardo y Dr. Pérez te miran como si fueras el abogado contrario. La imparcialidad se hizo trizas. Recordá: el parafraseo es neutral, no afirma como cierto lo que la parte dijo.',
-        technique: 'perdida-imparcialidad',
-      },
-      {
-        id: '4C',
-        text: 'A ver Florencia: usted se sintió estafada porque la empresa la trató mal y le quiso meter un voucher en vez de devolverle la plata. ¿Cierto?',
-        deltas: { climate: 18, donRicardo: 15, florencia: -3 },
-        feedback:
-          'Repetiste la carga emocional ("estafada", "trató mal", "meter un voucher") en vez de neutralizarla. El parafraseo despega el relato de las emociones negativas — vos hiciste lo contrario. Don Ricardo escucha al mediador validando los adjetivos de la contraparte y se cierra.',
-        technique: 'carga-emocional',
-      },
-      {
-        id: '4D',
-        text: 'Bueno, escuché. Pasemos al lado de Suavecito.',
-        deltas: { climate: 22, donRicardo: -3, florencia: 20 },
-        feedback:
-          'No parafraseaste. La función del parafraseo es doble: demostrarle a la parte que la escuchaste Y verificar que entendiste bien. Sin eso, Florencia no sabe si la oíste, y si entendiste mal lo arrastrás toda la mediación.',
-        technique: 'esquive',
-      },
-    ],
-  },
-  {
-    id: 5,
-    stage: 'conjunta-inicial',
-    playerRole: 'mediador',
-    meetingType: 'joint',
-    speaker: 'mediator',
-    title: 'Pregunta abierta a Suavecito',
-    situation:
-      'Parafraseaste a Florencia y ella confirmó. Ahora le toca a la parte requerida. Tenés que abrir la palabra para Don Ricardo y el Dr. Pérez. ¿Qué les preguntás?',
-    options: [
-      {
-        id: '5A',
-        text: 'Don Ricardo, Dr. Pérez: cuéntenme cómo vivieron ustedes esta situación. ¿Qué opciones tienen disponibles para resolver esto sin afectar la operación de Suavecito?',
-        deltas: { climate: -8, donRicardo: -10, florencia: 0 },
-        feedback:
-          'Pregunta abierta perfecta + ya plantás la semilla del interés ("sin afectar la operación"). Don Ricardo siente que el mediador entiende que la empresa también tiene problemas reales. Se abre. La conjunta inicial está cumpliendo su función: que las dos partes se expresen libremente.',
-        isBest: true,
-        technique: 'pregunta-abierta',
-      },
-      {
-        id: '5B',
-        text: 'Don Ricardo, ¿usted sabía que el Art. 34 LDC dice que los gastos de envío son a cargo del vendedor?',
-        deltas: { climate: 30, donRicardo: 22, florencia: -5 },
-        feedback:
-          'Pregunta cerrada Y acusatoria. Le tiraste el artículo encima en la conjunta. Don Ricardo siente que el mediador ya tomó partido. La imparcialidad se fue por la ventana.',
-        technique: 'perdida-imparcialidad',
-      },
-      {
-        id: '5C',
-        text: 'Don Ricardo, ¿qué cree que pensaría Florencia si usted le devolviera la plata hoy mismo?',
-        deltas: { climate: 18, donRicardo: 12, florencia: 5 },
-        feedback:
-          'Pregunta circular en conjunta — mal momento. Las circulares son potentes pero se reservan para las privadas, donde no exponen públicamente a la parte. Acá Don Ricardo siente que lo estás presionando frente a la contraparte.',
-        technique: 'pregunta-circular',
-      },
-      {
-        id: '5D',
-        text: 'Bueno, Don Ricardo, le toca. Pero le pido que sea breve porque Florencia tiene razón en lo principal.',
-        deltas: { climate: 45, donRicardo: 30, florencia: -5 },
-        feedback:
-          'Pérdida total de imparcialidad antes de que la otra parte abra la boca. "Florencia tiene razón en lo principal" es opinión del mediador sobre el fondo. Es exactamente lo que la Ley 26.589 prohíbe.',
+          '"Ya quedó clara la situación" antes de que abra la boca = decisión tomada. Pérdida de imparcialidad y presión temporal a la vez.',
         technique: 'perdida-imparcialidad',
       },
     ],
   },
 
   // ─────────────────────────────────────────────────────────────────────
-  // FASE 6 — ABOGADA DE FLORENCIA: ATAQUE DEL DR. PÉREZ
+  // FASE 4 — REUNIÓN CONJUNTA INICIAL · ABOGADA · ataque del Dr. Pérez + Don Ricardo duro
   // ─────────────────────────────────────────────────────────────────────
   {
-    id: 6,
+    id: 4,
     stage: 'conjunta-inicial',
     playerRole: 'abogada',
     meetingType: 'joint',
     speaker: 'drPerez',
     speakerLine:
-      'Permítame, doctor/a mediador/a. Soy el Dr. Pérez, letrado patrocinante de Suavecito. Quiero dejar sentado que los Términos y Condiciones de mi cliente fueron aceptados expresamente por la Sra. Gómez al momento de la compra: cláusula 7.3, no hay reembolsos a tarjeta para compras en promoción. Es un contrato de adhesión válido y ejecutado. Acá no hay nada que reformar. ¿Qué tiene para decir la parte requirente?',
-    title: 'Respondés como abogada/o de Florencia',
+      'Permítame doctor/a. Soy el Dr. Pérez, letrado de Suavecito. Voy al punto: la Sra. Gómez aceptó expresamente los Términos y Condiciones al hacer la compra. Cláusula 7.3, sin reembolsos a tarjeta para compras en promoción. Es un contrato de adhesión válido, firmado, ejecutado. Acá no hay nada que discutir. (Don Ricardo asiente con cara de pocos amigos.) ¿Qué tiene para decir la requirente?',
+    title: 'Respondés como abogado/a de Florencia',
     options: [
       {
-        id: '6A',
-        text: 'Doctor Pérez, le entiendo el planteo. El contrato de adhesión es válido como contrato — eso no se discute. La discusión es si esa cláusula puntual no encaja en el supuesto del Art. 37 LDC y el Art. 1119 CCyCN: desnaturalización de la obligación del proveedor y restricción de un derecho irrenunciable. ¿Le parece que lo analicemos cláusula por cláusula con el mediador?',
+        id: '4A',
+        text: 'Doctor, el contrato es válido como contrato. La discusión es si la cláusula 7.3 encaja en el Art. 37 LDC y el Art. 1119 CCyCN. ¿La analizamos?',
         deltas: { climate: -8, donRicardo: -5, florencia: -8 },
         feedback:
-          'Harvard puro: duro con el problema, suave con la persona. No negás el contrato (no caés en negociador duro), pero ubicás el debate donde corresponde (control de abusividad). Hablás en el registro técnico del letrado y lo invitás a un análisis ordenado. Dr. Pérez no tiene contra qué pegar.',
+          'Duro con el problema, suave con la persona. No negás el contrato (no caés en negociador duro), pero ubicás la pelea donde corresponde: control de abusividad. Lo invitás a un análisis ordenado.',
         isBest: true,
         technique: 'harvard',
       },
       {
-        id: '6B',
-        text: 'Doctor, sus T&C son papel mojado. El Art. 34 LDC es de orden público (Art. 65 LDC) y se les pasa por arriba a sus cláusulas. No hay más que discutir.',
-        deltas: { climate: 22, donRicardo: 18, florencia: -2 },
+        id: '4B',
+        text: 'Doctor, con todo respeto, sus T&C son papel mojado frente al orden público del Art. 65 LDC. Eso lo sabe usted y lo sé yo. No hay nada que adhesión pueda contra un derecho irrenunciable.',
+        deltas: { climate: 24, donRicardo: 20, florencia: -2 },
         feedback:
-          '"Papel mojado" es exactamente el tipo de frase que radicaliza al letrado de enfrente. El argumento es válido pero lo presentás como un golpe en vez de una invitación al análisis. Dr. Pérez se atrinchera.',
+          'Tenés razón en el fondo. Pero "papel mojado" radicaliza al letrado de enfrente: Dr. Pérez se atrinchera y Don Ricardo se prende a la pelea.',
         technique: 'negociador-duro',
       },
       {
-        id: '6C',
-        text: 'Doctor Pérez, si los T&C dicen eso, capaz que Florencia pueda revisar la pretensión — lo de la Gift Card no es tan desproporcionado.',
-        deltas: { climate: 15, donRicardo: -5, florencia: 25 },
+        id: '4C',
+        text: 'Doctor Pérez, mi clienta podría revisar la pretensión si Suavecito mejora las condiciones de la Gift Card. Pasemos a hablar de números concretos y veamos dónde nos encontramos.',
+        deltas: { climate: 16, donRicardo: -5, florencia: 25 },
         feedback:
-          'Negociador suave clásico. Cediste el punto central de la mediación frente a un argumento que ni siquiera resiste el control de cláusulas abusivas. Florencia te perdió la confianza en tiempo real: vos tenés que defenderla, no acomodarte.',
+          'Le cediste el punto central frente a un argumento que ni siquiera resiste el control de cláusulas. Florencia te perdió la confianza en tiempo real.',
         technique: 'negociador-suave',
       },
       {
-        id: '6D',
-        text: 'Doctor, mi clienta no recuerda haber leído esa cláusula. Sin lectura no hay aceptación.',
-        deltas: { climate: 12, donRicardo: 8, florencia: 8 },
+        id: '4D',
+        text: 'Doctor, mi clienta no recuerda haber leído esa cláusula al momento de la compra. Sin lectura efectiva no hay aceptación válida, y por ende la cláusula no le es oponible.',
+        deltas: { climate: 14, donRicardo: 10, florencia: 8 },
         feedback:
-          'Argumento débil. Las cláusulas de adhesión se aceptan por el solo hecho de la operación, leídas o no. Te estás peleando en el terreno equivocado — no es la falta de lectura, es la nulidad por abusividad.',
+          'Argumento débil: las cláusulas de adhesión se aceptan por la sola operación. Te estás peleando en el terreno equivocado — no es la lectura, es la nulidad por abusividad.',
         technique: 'esquive',
       },
     ],
   },
 
   // ─────────────────────────────────────────────────────────────────────
-  // ETAPA 3 — REUNIÓN PRIVADA CON FLORENCIA
+  // FASE 5 — REUNIÓN PRIVADA CON FLORENCIA · MEDIADOR · "abogado del diablo" sin nombrarlo
   // ─────────────────────────────────────────────────────────────────────
   {
-    id: 7,
-    stage: 'privada-florencia',
-    playerRole: 'mediador',
-    meetingType: 'private-florencia',
-    speaker: 'mediator',
-    privateContext:
-      'Convocaste a reunión privada con Florencia y su abogada. Suavecito quedó en sala de espera. Es el momento de indagar el interés real.',
-    title: 'Confidencialidad y primera pregunta cerrada',
-    situation:
-      'Florencia y la Dra. López están enfrente. Antes de empezar a preguntar, hay un paso técnico imprescindible. ¿Cómo arrancás la privada?',
-    options: [
-      {
-        id: '7A',
-        text: 'Florencia, antes de que hablemos te recuerdo algo importante: todo lo que digas acá es confidencial. No puedo transmitírselo a Don Ricardo ni al Dr. Pérez salvo que vos me autorices expresamente. Eso te da margen para contarme lo que necesites. Ahora sí: el contacto por WhatsApp con Suavecito, ¿fue dentro de los 10 días corridos desde que recibiste el colchón?',
-        deltas: { climate: -10, donRicardo: 0, florencia: -12 },
-        feedback:
-          'Apertura técnica del caucus impecable. Recordaste la confidencialidad (Art. 7 inc. e + Art. 8) — esto es lo que la ley exige antes de cualquier pregunta en privada y le abre la puerta a Florencia para hablar con confianza. Y arrancaste con una pregunta cerrada para confirmar el dato dirimente: ¿se ejerció en plazo? Florencia se siente cuidada.',
-        isBest: true,
-        technique: 'confidencialidad',
-      },
-      {
-        id: '7B',
-        text: 'Florencia, contame: ¿qué necesitás realmente? ¿Cuál es tu interés real detrás del reclamo?',
-        deltas: { climate: 8, donRicardo: 0, florencia: 5 },
-        feedback:
-          'Pregunta abierta razonable pero te salteaste dos pasos: recordar la confidencialidad (la ley te lo exige) y confirmar primero el dato técnico que ancla todo (el plazo del Art. 34). Florencia no sabe si puede confiar en vos.',
-        technique: 'esquive',
-      },
-      {
-        id: '7C',
-        text: 'Florencia, te voy a ser franco/a: la otra parte me dijo en privado que están dispuestos a transar. Aprovechá.',
-        deltas: { climate: 60, donRicardo: 20, florencia: 30 },
-        feedback:
-          'Catástrofe. Inventaste una transmisión de información de la otra parte (que no hubo) y violaste la confidencialidad de raíz. Florencia ya no te cree nada y si Don Ricardo se entera la mediación se cae. Esto es exactamente lo que NO se hace en una privada.',
-        technique: 'violacion-confidencialidad',
-      },
-      {
-        id: '7D',
-        text: 'Florencia, ¿estás de acuerdo en que tenés razón en lo principal? Yo creo que sí.',
-        deltas: { climate: 28, donRicardo: 0, florencia: 8 },
-        feedback:
-          'En privada también seguís siendo imparcial. "Yo creo que sí" es asesoramiento, y el Art. 26.589 te prohíbe asesorar. Florencia va a salir de la privada con expectativas infladas y eso te complica el replanteo.',
-        technique: 'perdida-imparcialidad',
-      },
-    ],
-  },
-  {
-    id: 8,
+    id: 5,
     stage: 'privada-florencia',
     playerRole: 'mediador',
     meetingType: 'private-florencia',
     speaker: 'florencia',
+    privateContext:
+      'Don Ricardo y el Dr. Pérez salieron de la sala. Florencia y la Dra. López quedan enfrente.',
     speakerLine:
-      'Doctor/a, ya que estamos en privado le cuento. Yo el daño punitivo lo pedí porque mi abogada me lo sugirió, pero lo que necesito de verdad es la plata a la tarjeta esta semana. Ya compré otro colchón porque me estoy mudando, tengo el cupo bloqueado. Si no acordamos hoy, voy a juicio. El fuero del Consumidor es gratis para mí.',
-    title: 'Abogado del diablo sobre el MAAN',
+      'Le voy a ser sincera. El daño punitivo lo pedí porque mi abogada me dijo que era la única forma de que se muevan. Pero lo que necesito de verdad es el dinero a la tarjeta esta semana. Ya compré otro colchón, estoy en plena mudanza, tengo el cupo bloqueado. Si esto no se resuelve hoy, voy a juicio. El fuero del Consumidor es gratis para mí, ¿no?',
+    title: 'Florencia te plantea su MAAN',
     options: [
       {
-        id: '8A',
-        text: 'Florencia, gracias por la sinceridad. Te hago de abogado/a del diablo un segundo: el fuero te es legalmente favorable, eso es cierto, y por el Art. 53 LDC no pagás tasa. Pero el proceso en CABA tarda entre 2 y 4 años hasta sentencia firme. ¿Vos creés que tu situación —liquidez para la mudanza esta semana— resiste esperar eso? ¿Qué pasaría si esto no sale como esperás?',
+        id: '5A',
+        text: 'Florencia, el fuero te favorece y es gratuito, sí. Pero en CABA tarda 2 a 4 años. ¿Tu mudanza de esta semana resiste esa espera?',
         deltas: { climate: -10, donRicardo: 0, florencia: -10 },
         feedback:
-          'Abogado del diablo Harvard. No le dijiste que el juicio era malo (mantenés imparcialidad) — le mostraste que su MAAN tiene una debilidad temporal que no se condice con su interés real. La ayudaste a tomar una decisión informada sin presionarla. Ella misma va a flexibilizar.',
+          'Sin opinar sobre el fondo, le mostraste que su MAAN tiene una debilidad temporal que no se condice con su interés real (liquidez ya). Ella misma va a flexibilizar sin que la presiones.',
         isBest: true,
         technique: 'abogado-diablo',
       },
       {
-        id: '8B',
-        text: 'Florencia, hacé lo que sentís. Si te plantás, te plantás; si firmás, firmás. Yo te acompaño.',
+        id: '5B',
+        text: 'Florencia, esta es tu decisión y la respeto plenamente. Vos conocés tu situación mejor que nadie, así que hacé lo que sientas y yo te acompaño en lo que elijas.',
         deltas: { climate: 18, donRicardo: 0, florencia: 18 },
         feedback:
-          'Abdicaste de tu rol. El mediador no asesora, pero sí ayuda a la parte a evaluar realidades. "Hacé lo que sientas" deja a Florencia sin los datos para decidir bien y le pasás la responsabilidad de algo que vos tenías que iluminar.',
+          'Abdicaste de tu rol. El mediador no asesora pero sí ayuda a que la parte evalúe realidades. Florencia se va sin los datos para decidir.',
         technique: 'esquive',
       },
       {
-        id: '8C',
-        text: 'Florencia, te recomiendo no soltar el daño punitivo. Es la única carta que tenés para que Suavecito se mueva. Vas a juicio y ganás todo.',
-        deltas: { climate: 35, donRicardo: 0, florencia: 20 },
+        id: '5C',
+        text: 'Florencia, mi consejo es que no sueltes el daño punitivo: es la única carta de presión real que tenés, y la jurisprudencia reciente del fuero viene reconociéndolo con fuerza.',
+        deltas: { climate: 38, donRicardo: 0, florencia: 22 },
         feedback:
-          'Asesoramiento estratégico explícito — exactamente lo que un mediador NO puede hacer (Art. 26.589: el mediador no asesora). Le diste consejo legal Y pronosticaste el resultado del juicio. Saliste del rol completamente.',
+          'Asesoramiento estratégico explícito. El mediador no puede hacer eso (Art. 26.589). Y encima pronosticaste el resultado judicial — saliste por completo del rol.',
         technique: 'perdida-imparcialidad',
       },
       {
-        id: '8D',
-        text: 'Florencia, mirá: si vas a juicio vas a perder. Es carísimo y la prueba es difícil. Mejor acordá lo que ofrezcan.',
-        deltas: { climate: 40, donRicardo: 0, florencia: 30 },
+        id: '5D',
+        text: 'Florencia, te soy honesto: el juicio es caro, largo e incierto. Lo mejor que podés hacer es aceptar lo que te ofrezcan hoy y cerrar el tema.',
+        deltas: { climate: 42, donRicardo: 0, florencia: 32 },
         feedback:
-          'Mentiste dos veces y violaste la imparcialidad. El fuero del Consumidor es gratuito por Art. 53 LDC, y Florencia tiene el caso ganado en el fondo. Le estás generando miedo para que acepte cualquier cosa. Es lo opuesto al rol.',
+          'Falso (el fuero es gratuito por Art. 53 LDC) y parcializado. Le generaste miedo para que firme cualquier cosa. Lo opuesto al rol.',
         technique: 'perdida-imparcialidad',
       },
     ],
   },
 
   // ─────────────────────────────────────────────────────────────────────
-  // ETAPA 4 — REUNIÓN PRIVADA CON SUAVECITO
+  // FASE 6 — REUNIÓN PRIVADA CON SUAVECITO · MEDIADOR · pregunta circular
   // ─────────────────────────────────────────────────────────────────────
   {
-    id: 9,
+    id: 6,
     stage: 'privada-suavecito',
     playerRole: 'mediador',
     meetingType: 'private-suavecito',
     speaker: 'donRicardo',
     privateContext:
-      'Cerraste la privada con Florencia, ella quedó en sala de espera. Ahora estás con Don Ricardo y el Dr. Pérez. Le recordaste la confidencialidad y abrís la conversación.',
+      'Florencia salió de la sala. Don Ricardo y el Dr. Pérez se acomodan enfrente.',
     speakerLine:
-      'Doctor/a, le voy a ser franco acá en privado. No es por el colchón. Si yo le devuelvo la plata a esta, mañana tengo cincuenta más con el mismo argumento. Es un tema de flujo de caja. La Gift Card no es por joderla — es para que la plata no se vaya de la empresa.',
-    title: 'Pregunta circular a Don Ricardo',
+      'Doctor/a, acá en privado se lo digo: no es el colchón. Si yo le devuelvo la plata a esta, mañana tengo cincuenta más con el mismo argumento. Es flujo de caja, no soberbia. La Gift Card es para que el dinero no se vaya de la empresa.',
+    title: 'Don Ricardo confiesa su interés real',
     options: [
       {
-        id: '9A',
-        text: 'Don Ricardo, le agradezco la franqueza. Le pregunto algo: si este caso llega a sentencia con daño punitivo y se hace público, ¿cómo cree que lo vería el resto de sus clientes y los reviews de Suavecito? Y mirando hacia adelante, ¿cómo se imagina la empresa en seis meses con o sin esa cláusula 7.3?',
+        id: '6A',
+        text: 'Le agradezco la franqueza. Si esto sale en un fallo público con daño punitivo, ¿cómo cree que lo verían sus clientes? Y a seis meses, ¿cómo imagina la empresa con esa cláusula?',
         deltas: { climate: -12, donRicardo: -12, florencia: 0 },
         feedback:
-          'Pregunta circular doble Harvard: desplazamiento subjetivo (cómo lo verían los clientes) + desplazamiento temporal (cómo se imagina en 6 meses). Lo movés a evaluar el verdadero costo de no acordar sin tomar partido. Es la jugada más fina del repertorio en privada. Don Ricardo empieza a separar su posición de su interés real.',
+          'Sin opinar, lo desplazaste a evaluar la situación desde dos perspectivas que no estaba mirando: el mercado y el futuro. Sin tomar partido. Empieza a separar su posición de su interés real.',
         isBest: true,
         technique: 'pregunta-circular',
       },
       {
-        id: '9B',
-        text: 'Don Ricardo, ¿usted cumple con el Art. 34 LDC sí o no?',
-        deltas: { climate: 20, donRicardo: 22, florencia: 0 },
+        id: '6B',
+        text: 'Don Ricardo, lo escucho, pero dígame con franqueza: ¿usted entiende que con esa política de Gift Card está incumpliendo lisa y llanamente el Art. 34 de la Ley de Defensa del Consumidor?',
+        deltas: { climate: 22, donRicardo: 24, florencia: 0 },
         feedback:
-          'Pregunta cerrada acusatoria. Don Ricardo nunca te va a contestar "no, no cumplo". Cerraste la puerta cuando se estaba abriendo: él te acaba de confesar su interés real (flujo de caja) y vos lo cortaste con un sí/no jurídico.',
+          'Pregunta cerrada acusatoria. Cerraste la puerta cuando se estaba abriendo. Él te dio información valiosa sobre su interés real y vos lo enfrentaste con un sí/no jurídico.',
         technique: 'acusacion',
       },
       {
-        id: '9C',
-        text: 'Don Ricardo, contame: ¿cuánto está dispuesto a pagar?',
-        deltas: { climate: 8, donRicardo: 5, florencia: 0 },
+        id: '6C',
+        text: 'Don Ricardo, lo entiendo perfectamente. Para no dar tantas vueltas, dígame directamente: ¿cuánto estaría dispuesto a poner sobre la mesa para cerrar esto hoy mismo?',
+        deltas: { climate: 10, donRicardo: 6, florencia: 0 },
         feedback:
-          'Saltaste a la cifra cuando Don Ricardo te estaba dando intereses reales. Lo arrastraste de vuelta al regateo posicional y perdiste el momentum del caucus. La privada es para explorar intereses, no para negociar números.',
+          'Saltaste al regateo cuando él te estaba entregando intereses. La privada sirve para explorar intereses, no para discutir cifras — eso viene después.',
         technique: 'regateo-posicional',
       },
       {
-        id: '9D',
-        text: 'Don Ricardo, ya que me lo dice en privado: usted está reconociendo que aplica la misma cláusula a todos sus clientes. Eso es lo que el Art. 55 LDC sanciona como acción colectiva.',
-        deltas: { climate: 55, donRicardo: 40, florencia: 0 },
+        id: '6D',
+        text: 'Don Ricardo, lo que acaba de admitir —que aplica la misma cláusula a todos— es justo lo que el Art. 55 LDC habilita como acción colectiva. Téngalo presente.',
+        deltas: { climate: 55, donRicardo: 42, florencia: 0 },
         feedback:
-          'Catástrofe. Convertiste una confesión en privada en una amenaza jurídica. Rompiste la confidencialidad implícita del caucus y le pasaste a Don Ricardo el mensaje de que todo lo que diga se va a usar en su contra. No vuelve a hablar.',
+          'Convertiste una confesión en privada en una amenaza jurídica. Le pasaste el mensaje de que todo lo que diga se va a usar en su contra. No vuelve a hablar.',
         technique: 'violacion-confidencialidad',
       },
     ],
   },
+
+  // ─────────────────────────────────────────────────────────────────────
+  // FASE 7 — REUNIÓN PRIVADA CON SUAVECITO · MEDIADOR · agente de la realidad al Dr. Pérez
+  // ─────────────────────────────────────────────────────────────────────
   {
-    id: 10,
+    id: 7,
     stage: 'privada-suavecito',
     playerRole: 'mediador',
     meetingType: 'private-suavecito',
     speaker: 'drPerez',
     speakerLine:
-      'Doctor/a, vamos a sincerar la cuestión jurídica. Yo entiendo lo del Art. 34, pero esto es interpretable. ¿Usted realmente cree que un juez del fuero del Consumidor le va a otorgar daño punitivo en un caso por un colchón? En mi experiencia vi sentencias para todos lados.',
-    title: 'Agente de la realidad con Dr. Pérez',
+      'Doctor/a, hablemos en serio entre técnicos. Yo entiendo el Art. 34, pero esto es interpretable. ¿Usted realmente piensa que un juez del fuero del Consumidor otorga daño punitivo en un caso por un colchón? En mi experiencia vi sentencias para todos lados.',
+    title: 'El Dr. Pérez te desafía técnicamente',
     options: [
       {
-        id: '10A',
-        text: 'Doctor Pérez, le devuelvo la pregunta: en su experiencia, ¿cuál suele ser el criterio del fuero del Consumidor cuando una empresa, conociendo el Art. 34 LDC, aplica una cláusula declarada nula por el Art. 37 LDC como política aplicada a todos los clientes? ¿Usted vio sentencias que moderan el daño punitivo en esos casos, o que lo agravan?',
+        id: '7A',
+        text: 'Doctor, se la devuelvo: cuando la empresa conoce el Art. 34, aplica una cláusula nula por el Art. 37 y lo hace con todos, ¿el fuero modera el punitivo o lo agrava?',
         deltas: { climate: -10, donRicardo: -8, florencia: 0 },
         feedback:
-          'Agente de la realidad en su forma más pura. No le dijiste a Dr. Pérez que se equivocaba — le pediste a él, que es el técnico, que extraiga la conclusión. Ubicaste los tres factores agravantes (conocer la ley + cláusula nula + política sistémica) sin que parezca que vos lo decís. Él no puede contestar sin reconocer que el escenario judicial es desfavorable. Imparcialidad intacta.',
+          'Mantuviste imparcialidad: no opinaste, le pediste a él —el técnico— que extrajera la conclusión. Ubicaste los tres agravantes (conocimiento + nulidad + política sistémica) sin que parezca que lo decís vos. No puede contestar sin reconocer que el escenario es desfavorable.',
         isBest: true,
         technique: 'agente-realidad',
       },
       {
-        id: '10B',
-        text: 'Doctor, no me importa lo que usted vio. La ley es clara y el daño punitivo se va a otorgar. Eso es así.',
+        id: '7B',
+        text: 'Doctor, con el debido respeto a su experiencia, en este caso la ley es clara: el daño punitivo se va a otorgar y usted lo sabe tan bien como yo. No hay interpretación que valga.',
         deltas: { climate: 28, donRicardo: 18, florencia: 0 },
         feedback:
-          'Saliste del rol. Adelantaste opinión sobre el fallo, perdiste imparcialidad y le diste a Dr. Pérez una excusa perfecta para acusarte ante la otra parte: "el mediador está parcializado". La técnica del agente de la realidad funciona porque NO opinás — preguntás.',
+          'Adelantaste opinión sobre el fallo y perdiste imparcialidad. Le diste al Dr. Pérez una excusa perfecta para acusarte de parcial frente a la otra parte.',
         technique: 'perdida-imparcialidad',
       },
       {
-        id: '10C',
-        text: 'Doctor, tiene razón, es interpretable. Quizás Florencia podría aceptar bajar la pretensión del daño punitivo.',
+        id: '7C',
+        text: 'Doctor, le reconozco que es interpretable, tiene razón en eso. Quizás Florencia estaría dispuesta a bajar bastante la pretensión del daño punitivo si llegamos a un buen arreglo.',
         deltas: { climate: 22, donRicardo: -5, florencia: 25 },
         feedback:
-          'Mordiste el anzuelo del letrado y encima transmitiste implícitamente algo que escuchaste de la otra parte. Cediste un argumento que ni siquiera estaba en juego y posicionaste a Florencia en desventaja sin su autorización.',
+          'Mordiste el anzuelo. Cediste una carta de Florencia sin su autorización y transmitiste información implícita a la otra parte. Doble error.',
         technique: 'negociador-suave',
       },
       {
-        id: '10D',
-        text: 'Doctor, le pido que sea breve. Yo no soy juez y no opino. Avancemos.',
-        deltas: { climate: 18, donRicardo: 5, florencia: 0 },
+        id: '7D',
+        text: 'Doctor, le recuerdo que esto no es un juicio y que acá no corresponde que nos pongamos a debatir pronósticos de fallos. Sigamos con lo nuestro.',
+        deltas: { climate: 16, donRicardo: 5, florencia: 0 },
         feedback:
-          'Esquivaste el momento perfecto para usar agente de la realidad. Tenés razón en no opinar — pero el mediador justamente puede hacer que el propio letrado extraiga las conclusiones. Perdiste la oportunidad de mover la rigidez técnica del Dr. Pérez.',
+          'Esquivaste el momento perfecto para mover la rigidez del letrado sin opinar. Tenés razón en no opinar, pero perdiste la oportunidad de que él mismo extraiga la conclusión.',
         technique: 'esquive',
       },
     ],
   },
 
   // ─────────────────────────────────────────────────────────────────────
-  // ETAPA 5 — REPLANTEO DEL PROBLEMA
+  // FASE 8 — REPLANTEO · MEDIADOR
   // ─────────────────────────────────────────────────────────────────────
   {
-    id: 11,
+    id: 8,
     stage: 'replanteo',
     playerRole: 'mediador',
     meetingType: 'joint',
     speaker: 'mediator',
-    title: 'Replanteo: de posiciones a intereses',
+    title: 'Las partes vuelven a la mesa conjunta',
     situation:
-      'Volvieron a la reunión conjunta después de las dos privadas. Ahora tenés que replantear el problema: tomar las posiciones declaradas de cada parte y reformularlas en términos de intereses, sin revelar lo que cada uno te dijo en privada. Es el momento bisagra de la mediación.',
+      'Convocaste de nuevo a Florencia. Las cuatro personas están otra vez frente a la mesa. Sabés lo que cada una te dijo en privada, pero no podés transmitirlo. Te toca abrir esta segunda conjunta y orientarla.',
     options: [
       {
-        id: '11A',
-        text: 'Quiero replantear lo que vinimos hablando, para ver si lo tomamos así. Por el lado de Florencia: lo que necesita es recuperar lo que pagó de manera efectiva y sentir que su reclamo fue tratado como lo que es: el ejercicio de un derecho, no un favor. Por el lado de Suavecito: la empresa no se opone a cumplir con sus obligaciones, lo que busca es una forma que no comprometa su operación financiera y no abra la puerta a otros reclamos. Esos dos intereses no son opuestos. ¿Les parece que trabajemos sobre cómo combinarlos?',
+        id: '8A',
+        text: 'Quiero proponerles cómo veo el problema. Florencia necesita recuperar lo pagado de forma efectiva y sentir que su reclamo es un derecho. Suavecito busca cumplir sin comprometer su operación. No son opuestos: ¿lo combinamos?',
         deltas: { climate: -12, donRicardo: -10, florencia: -10 },
         feedback:
-          'Replanteo Harvard impecable. Tomaste las posiciones declaradas y las reformulaste como intereses compatibles. NO transmitiste lo que cada uno te dijo en privada (mantenés confidencialidad) pero usaste esa info para reformular. Mostraste que los intereses no son contradictorios. Es el momento bisagra: la negociación pasa de posicional a colaborativa.',
+          'Tomaste las posiciones declaradas y las reformulaste como intereses compatibles, sin revelar lo dicho en privadas. Mostraste que la mesa es posible. El proceso pasa de posicional a colaborativo.',
         isBest: true,
         technique: 'replanteo',
       },
       {
-        id: '11B',
-        text: 'Bueno, Florencia me dijo en privada que necesita la plata urgente porque está en una mudanza. Y Don Ricardo me dijo que el problema es el flujo de caja. Así que pongamos las cosas sobre la mesa.',
+        id: '8B',
+        text: 'Para destrabar les cuento lo que cada uno me dijo a solas: Florencia necesita la plata urgente por la mudanza, y a Don Ricardo le preocupa el flujo de caja. Ahora que está todo claro, negociemos de frente.',
         deltas: { climate: 75, donRicardo: 50, florencia: 50 },
         feedback:
-          'Violación gravísima de la confidencialidad de ambas privadas (Art. 7 inc. e + Art. 8). Transmitiste literalmente lo que te dijo cada parte sin autorización. Las dos quedaron expuestas frente a la contraparte. La mediación se cayó en este mismo momento — y vos tenés responsabilidad profesional.',
+          'Violaste la confidencialidad de las dos privadas (Art. 7 inc. e + Art. 8). Las dos partes quedaron expuestas. La mediación se cae acá — y vos tenés responsabilidad profesional.',
         technique: 'violacion-confidencialidad',
       },
       {
-        id: '11C',
-        text: 'A ver, lo que veo es lo siguiente: Florencia pide $1.350.000 y Don Ricardo ofrece una Gift Card de $980.000. Estamos a $370.000 de distancia. Partamos al medio.',
-        deltas: { climate: 22, donRicardo: 5, florencia: 18 },
+        id: '8C',
+        text: 'A ver: Florencia pide $1.350.000 y Don Ricardo ofrece una Gift Card de $980.000. Hay $370.000 de diferencia. Lo más práctico sería que cada uno ceda la mitad y cerramos en el punto medio.',
+        deltas: { climate: 22, donRicardo: 6, florencia: 18 },
         feedback:
-          'Eso no es replanteo — es regateo posicional puro disfrazado. Volviste a la superficie del iceberg (las cifras) sin tocar los intereses que descubriste en las privadas. Las dos partes quedan donde estaban y el método Harvard se cae.',
+          'Eso es regateo, no replanteo. Volviste a la superficie del iceberg sin tocar los intereses. Las partes quedan donde estaban.',
         technique: 'regateo-posicional',
       },
       {
-        id: '11D',
-        text: 'Antes de avanzar, quiero decir que el Art. 34 LDC es claro: Florencia tiene derecho. Suavecito tiene que devolver. El resto es secundario.',
-        deltas: { climate: 50, donRicardo: 35, florencia: -5 },
+        id: '8D',
+        text: 'Antes de avanzar quiero ser claro con ambos: el Art. 34 LDC no deja lugar a dudas. Florencia ejerció su derecho y Suavecito tiene la obligación de devolver. El resto de la discusión es accesorio.',
+        deltas: { climate: 48, donRicardo: 34, florencia: -5 },
         feedback:
-          'Adelantaste opinión jurídica como mediador. Tomaste partido por una de las partes en plena conjunta. Don Ricardo siente que ya hay sentencia. No hay forma de cerrar acuerdo después de esto.',
+          'Opinaste sobre el fondo en plena conjunta. Tomaste partido. Don Ricardo siente que ya hay sentencia. No hay forma de cerrar acuerdo después de esto.',
         technique: 'perdida-imparcialidad',
       },
     ],
   },
 
   // ─────────────────────────────────────────────────────────────────────
-  // ETAPA 6 — BRAINSTORMING
+  // FASE 9 — BRAINSTORMING · ABOGADA · Don Ricardo en modo duro
   // ─────────────────────────────────────────────────────────────────────
   {
-    id: 12,
+    id: 9,
+    stage: 'brainstorming',
+    playerRole: 'abogada',
+    meetingType: 'joint',
+    speaker: 'donRicardo',
+    speakerLine:
+      '¿Saben qué? Estoy harto de esta historia. Mire doctor/a, le voy a ser claro: yo no le voy a devolver un peso a esta señora. Si quiere ir a tribunales, vamos. Tengo plata para pagar abogados, tiempo para esperar tres años, y la verdad es que su clienta usó el colchón. Dígame qué propuesta concreta tiene y le digo si me sirve o nos vamos cada uno por su lado.',
+    title: 'Don Ricardo te tira un ultimátum',
+    options: [
+      {
+        id: '9A',
+        text: 'Lo entiendo, Don Ricardo. Florencia desiste del daño punitivo, por escrito, si reintegran los $980.000 a la tarjeta, cubren la logística y revisan la cláusula 7.3. Esas tres cosas y cerramos hoy.',
+        deltas: { climate: -10, donRicardo: -8, florencia: -8 },
+        feedback:
+          'Harvard puro: usás el desistimiento del punitivo —que Florencia valora poco y Suavecito mucho— como moneda para conseguir lo que ella sí valora. Firmeza con cifra concreta sin escalar el tono.',
+        isBest: true,
+        technique: 'harvard',
+      },
+      {
+        id: '9B',
+        text: 'Mire Don Ricardo, si quiere ir a juicio vamos. Florencia no baja un peso de los $1.350.000 y en tribunales le sumamos daño moral y costas. Le va a salir el triple. Usted decide.',
+        deltas: { climate: 28, donRicardo: 28, florencia: 6 },
+        feedback:
+          'Le respondiste al tono duro con tono duro. Encima Florencia te dijo en privada que el punitivo no le importaba — estás peleando contra el interés de tu clienta.',
+        technique: 'negociador-duro',
+      },
+      {
+        id: '9C',
+        text: 'Don Ricardo, para destrabar esto mi clienta estaría dispuesta a aceptar la Gift Card, siempre que ustedes se hagan cargo del envío de la devolución. ¿Lo dejamos así y pasamos a redactar?',
+        deltas: { climate: 18, donRicardo: -10, florencia: 28 },
+        feedback:
+          'Cediste el punto central por presión del tono áspero. Florencia desde el día uno te dijo que no quería Gift Card. Negociador suave bajo amenaza.',
+        technique: 'negociador-suave',
+      },
+      {
+        id: '9D',
+        text: 'Mire Don Ricardo, para no trabarnos, mejor proponga usted la fórmula que le cierra y nosotros la evaluamos con tranquilidad.',
+        deltas: { climate: 14, donRicardo: 8, florencia: 14 },
+        feedback:
+          'Cediste el primer ancla bajo presión. Si Don Ricardo arranca la propuesta, va a tirar bajo y desde ahí no te movés. La firmeza Harvard se rompe.',
+        technique: 'esquive',
+      },
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────────
+  // FASE 10 — BRAINSTORMING · MEDIADOR · las 4 opciones de mutuo beneficio del PDF
+  // ─────────────────────────────────────────────────────────────────────
+  {
+    id: 10,
     stage: 'brainstorming',
     playerRole: 'mediador',
     meetingType: 'joint',
     speaker: 'mediator',
-    title: 'Brainstorming: generar muchas opciones',
+    title: 'Cuatro opciones sobre la mesa: ¿cuál encaja mejor?',
     situation:
-      'Las dos partes aceptaron el replanteo. Ahora tenés que facilitar la etapa de brainstorming: que se generen muchas opciones, sin compromiso, antes de decidir. ¿Cómo lo introducís?',
+      'Después del intercambio surgieron cuatro propuestas concretas para resolver el conflicto. Como mediador/a te toca señalar cuál combina mejor los intereses reales de ambas partes —no la que cada uno quiere, sino la que les sirve a los dos.',
     options: [
       {
-        id: '12A',
-        text: 'Bien. Ahora les propongo algo. Vamos a tirar todas las ideas posibles para resolver esto, sin que ninguno se comprometa con nada todavía. Primero generamos, después decidimos. Las ideas malas también valen porque a veces destrabar una mala da pie a una buena. ¿Quién arranca?',
-        deltas: { climate: -10, donRicardo: -8, florencia: -8 },
+        id: '10A',
+        text: OPCIONES_MUTUO_BENEFICIO[0].text,
+        deltas: { climate: 12, donRicardo: 6, florencia: 14 },
         feedback:
-          'Brainstorming Harvard puro. Explicaste la regla de oro (separar generar de decidir), abriste el espacio creativo y descomprimiste la presión de "tener que proponer algo bueno". Las dos partes se animan a tirar ideas. Es exactamente lo que el método dice.',
-        isBest: true,
-        technique: 'brainstorming',
-      },
-      {
-        id: '12B',
-        text: 'Florencia, ¿qué propuesta concreta vas a aceptar? Don Ricardo, ¿qué propuesta concreta va a hacer? Necesito un número.',
-        deltas: { climate: 15, donRicardo: 10, florencia: 12 },
-        feedback:
-          'Saltaste el brainstorming y fuiste directo a la propuesta cerrada. Sin la fase de generación de opciones, cada parte tira el número más extremo posible y la negociación se traba. El brainstorming sirve justamente para que aparezcan combinaciones que nadie ve sin desbloquear la creatividad.',
+          'Florencia recupera el dinero, pero el envío lo paga ella —cuando el Art. 34 LDC pone los gastos sobre el vendedor. La cláusula abusiva sigue intacta. Acuerdo parcial: resuelve lo patrimonial pero le carga costos indebidos a la requirente.',
         technique: 'regateo-posicional',
       },
       {
-        id: '12C',
-        text: 'Bueno, las opciones que yo veo son tres: pago total a tarjeta, Gift Card por mayor monto, o pago en cuotas. Elijan.',
-        deltas: { climate: 25, donRicardo: 12, florencia: 15 },
+        id: '10B',
+        text: OPCIONES_MUTUO_BENEFICIO[1].text,
+        deltas: { climate: 14, donRicardo: -5, florencia: 22 },
         feedback:
-          'Diste vos las opciones. El mediador no propone soluciones (eso lo distingue de la amigable composición, según el apunte). En el brainstorming las opciones las generan LAS PARTES — vos solo facilitás el proceso. Saliste del rol.',
-        technique: 'perdida-imparcialidad',
+          'Suavecito preserva flujo de caja pero Florencia pierde frente a la inflación. Su interés real era liquidez ahora —cobrar en cuotas es la versión competitiva del acuerdo. Gana la empresa, pierde el tiempo de la consumidora.',
+        technique: 'negociador-suave',
       },
       {
-        id: '12D',
-        text: 'Avancemos rápido porque ya llevamos muchas horas. Tiren propuestas concretas, que sean realistas.',
-        deltas: { climate: 14, donRicardo: 5, florencia: 12 },
+        id: '10C',
+        text: OPCIONES_MUTUO_BENEFICIO[2].text,
+        deltas: { climate: 18, donRicardo: -8, florencia: 32 },
         feedback:
-          'Le metiste presión temporal a una fase que justamente necesita aire para que aparezcan opciones creativas. "Que sean realistas" inhibe la generación — Harvard dice "cantidad antes que calidad" en esta etapa.',
+          'Es el escenario que Florencia rechazó desde el día uno: ata su dinero a un comercio donde no piensa volver. La cláusula 7.3 queda implícitamente convalidada. Suavecito gana todo: no devuelve plata Y blinda la cláusula.',
         technique: 'esquive',
       },
-    ],
-  },
-
-  // ─────────────────────────────────────────────────────────────────────
-  // FASE 13 — ABOGADA DE FLORENCIA: PROPONE LA OPCIÓN DE MUTUO BENEFICIO
-  // ─────────────────────────────────────────────────────────────────────
-  {
-    id: 13,
-    stage: 'brainstorming',
-    playerRole: 'abogada',
-    meetingType: 'joint',
-    speaker: 'donRicardo',
-    speakerLine:
-      'Bueno, doctor/a, vimos algunas ideas sueltas. Pero acá quien tiene que destrabar es la parte que más pide. ¿Florencia, vos qué propuesta concreta tirás sobre la mesa? Algo realista, eh, no me venga con los $1.350.000 enteros.',
-    title: 'Tirás la propuesta Harvard',
-    options: [
       {
-        id: '13A',
-        text: 'Don Ricardo, tiro algo concreto y vemos si encaja. Florencia ofrece desistir formalmente del daño punitivo, con cláusula expresa en el acuerdo homologado, si se cumplen tres condiciones: reintegro íntegro de $980.000 a la tarjeta dentro de los 10 días hábiles, retiro del colchón a domicilio por logística de Suavecito sin costo para ella, y compromiso por escrito de revisión de la cláusula 7.3. ¿Lo trabajamos?',
-        deltas: { climate: -12, donRicardo: -10, florencia: -10 },
+        id: '10D',
+        text: OPCIONES_MUTUO_BENEFICIO[3].text,
+        deltas: { climate: -14, donRicardo: -12, florencia: -12 },
         feedback:
-          'Intercambio diferencial Harvard impecable: usás el desistimiento del daño punitivo —que Florencia valora poco y Suavecito mucho— como moneda para conseguir las tres cosas que tu clienta SÍ valora. Sumás un criterio (revisión de cláusula) que protege a futuros consumidores. Acuerdo gana-gana.',
+          'La única gana-gana: Florencia recupera liquidez Y obtiene un gesto comercial que reconoce su reclamo; Suavecito cierra el riesgo del daño punitivo Y protege su reputación con el cupón. El intercambio diferencial funciona porque cada parte cede lo que valora poco y obtiene lo que valora mucho.',
         isBest: true,
         technique: 'harvard',
-      },
-      {
-        id: '13B',
-        text: 'Florencia no baja de los $1.350.000 íntegros. O paga eso o vamos a juicio.',
-        deltas: { climate: 25, donRicardo: 25, florencia: 5 },
-        feedback:
-          'Negociador duro en el momento equivocado. Te aferraste a la cifra cuando Don Ricardo estaba pidiendo una propuesta concreta para destrabar. Encima Florencia te dijo en la privada que el punitivo no le importaba. Estás peleando contra el interés real de tu clienta.',
-        technique: 'negociador-duro',
-      },
-      {
-        id: '13C',
-        text: 'Don Ricardo, si paga los $980.000 ahora, Florencia firma desistimiento total. Sin más condiciones.',
-        deltas: { climate: 12, donRicardo: -8, florencia: 18 },
-        feedback:
-          'Conseguiste el reintegro pero soltaste la logística inversa Y cualquier compromiso sobre la cláusula a futuro. Florencia paga el envío y Suavecito sigue aplicando la misma cláusula abusiva a los próximos 50 clientes. Negociador suave en el cierre.',
-        technique: 'negociador-suave',
-      },
-      {
-        id: '13D',
-        text: 'Don Ricardo, propone usted y mi clienta evalúa.',
-        deltas: { climate: 10, donRicardo: 5, florencia: 12 },
-        feedback:
-          'Cediste el primer ancla. En la fase de propuestas concretas, el primer número que entra a la mesa fija el marco mental del resto. Si Don Ricardo arranca, lo va a tirar bajo y de ahí no te movés.',
-        technique: 'esquive',
-      },
-    ],
-  },
-
-  // ─────────────────────────────────────────────────────────────────────
-  // ETAPA 7 — CRITERIOS OBJETIVOS
-  // ─────────────────────────────────────────────────────────────────────
-  {
-    id: 14,
-    stage: 'criterios-objetivos',
-    playerRole: 'mediador',
-    meetingType: 'joint',
-    speaker: 'drPerez',
-    speakerLine:
-      'Doctor/a mediador/a, antes de avanzar con esta propuesta, quiero dejar sentado que la cláusula 7.3 de nuestros T&C sigue vigente, y que cualquier acuerdo no implica reconocimiento de su nulidad. La reversión bancaria del cargo, por otro lado, demora hasta 60 días hábiles según la procesadora.',
-    title: 'Criterios objetivos: anclar el acuerdo en datos externos',
-    options: [
-      {
-        id: '14A',
-        text: 'Doctor Pérez, gracias. Para que el acuerdo sea sólido necesitamos asentarlo en criterios objetivos. Sobre la cláusula 7.3: ¿hay precedentes jurisprudenciales del fuero del Consumidor sobre cláusulas similares a las que ambas partes podrían referirse? Sobre los plazos de reversión: ¿podemos verificar con un consulta puntual al banco emisor cuál es el plazo real cuando el comerciante instruye la reversión voluntaria? Y sobre el monto: ¿cuál sería el valor de mercado actual de un colchón de características similares?',
-        deltas: { climate: -10, donRicardo: -8, florencia: -8 },
-        feedback:
-          'Criterios objetivos Harvard puro. Pediste tres criterios externos a la voluntad de las partes: jurisprudencia comparable, plazos bancarios reales, valor de mercado. El acuerdo no depende ya de quién es más terco — se ancla en datos. Dr. Pérez no puede oponerse sin proponer un criterio externo distinto.',
-        isBest: true,
-        technique: 'criterios-objetivos',
-      },
-      {
-        id: '14B',
-        text: 'Doctor, su cláusula es abusiva y sus 60 días son un mito. La devolución se hace en 10. Punto.',
-        deltas: { climate: 28, donRicardo: 18, florencia: 0 },
-        feedback:
-          'Tenés razón en ambas cosas pero las afirmaste sin fundamento concreto y con tono de pelea. Perdiste imparcialidad. La idea del criterio objetivo es que el dato venga de afuera, no de tu boca.',
-        technique: 'perdida-imparcialidad',
-      },
-      {
-        id: '14C',
-        text: 'Bueno, si Dr. Pérez dice 60 días, dejemos 60 días. Y la cláusula 7.3 puede quedar vigente. Avancemos.',
-        deltas: { climate: 18, donRicardo: -8, florencia: 30 },
-        feedback:
-          'Aceptaste sin verificar dos cosas que probablemente no son ciertas. Florencia necesita el dinero ya — 60 días la deja sin liquidez. Y dejar la cláusula intacta significa que Suavecito sigue aplicándola a los próximos clientes. El criterio objetivo se pide, no se concede.',
-        technique: 'negociador-suave',
-      },
-      {
-        id: '14D',
-        text: 'Doctor, dejemos los T&C y los plazos al final. Cerremos por el monto principal.',
-        deltas: { climate: 16, donRicardo: 5, florencia: 10 },
-        feedback:
-          'Esquivaste el criterio objetivo. El acuerdo sin fundamentar los datos técnicos es un acuerdo blando: Suavecito lo firma hoy y mañana lo discute. Los criterios objetivos son lo que blinda el acuerdo a futuro.',
-        technique: 'esquive',
-      },
-    ],
-  },
-
-  // ─────────────────────────────────────────────────────────────────────
-  // ETAPA 8 — ACUERDO
-  // ─────────────────────────────────────────────────────────────────────
-  {
-    id: 15,
-    stage: 'acuerdo',
-    playerRole: 'abogada',
-    meetingType: 'joint',
-    speaker: 'donRicardo',
-    speakerLine:
-      'Doctor/a, estamos cerca. Pero antes de firmar nada necesito saber: ¿qué hace su clienta si nos paramos acá? Porque yo tengo equipo legal, no le tengo miedo al juicio. Quiero ver con qué cartas viene.',
-    title: 'Cierre con MAAN comunicada con firmeza',
-    options: [
-      {
-        id: '15A',
-        text: 'Don Ricardo, prefiero cerrar hoy y le explico por qué para los dos. Si no acordamos, Florencia tiene la vía del fuero del Consumidor (Ley 6.286/2020 CABA), gratuita por Art. 53 LDC, con daño punitivo en agenda. Es un MAAN sólido para ella. Pero también entiendo el de ustedes: ir a juicio implica exponer la cláusula 7.3 a una nulidad firme con efecto sobre otros clientes, además del tiempo y el desgaste. Por eso le insisto: cerremos hoy, no porque alguno tenga miedo, sino porque a los dos nos conviene más.',
-        deltas: { climate: -10, donRicardo: -10, florencia: -10 },
-        feedback:
-          'MAAN comunicada con firmeza Harvard. Presentaste tu propio MAAN con fundamento legal concreto (no como amenaza), mostraste que entendiste el MAAN de la otra parte mejor que ellos mismos, y cerraste con propuesta de futuro común. Es exactamente el cierre que Fisher y Ury describen en Sí... ¡de acuerdo!',
-        isBest: true,
-        technique: 'harvard',
-      },
-      {
-        id: '15B',
-        text: 'Si no acuerdan hoy, vamos a juicio y pedimos capital, daño punitivo, daño moral y costas. Les sale tres veces más caro.',
-        deltas: { climate: 30, donRicardo: 28, florencia: 5 },
-        feedback:
-          'MAAN como amenaza pura. Tiraste todo el trabajo de las 14 fases anteriores justo en el cierre. Don Ricardo no firma bajo amenaza: se levanta. El método Harvard distingue entre "ofrecer consecuencias positivas de acordar" y "amenazar con consecuencias negativas de no hacerlo" — vos elegiste lo segundo.',
-        technique: 'negociador-duro',
-      },
-      {
-        id: '15C',
-        text: 'Y bueno, veremos qué hacemos. Florencia decide.',
-        deltas: { climate: 22, donRicardo: 5, florencia: 20 },
-        feedback:
-          'Le mostraste a Don Ricardo que no tenés MAAN clara y que tu clienta tampoco. Le diste a entender que cualquier oferta es mejor que ninguna, justo en el cierre. Suavecito va a empeorar la propuesta.',
-        technique: 'negociador-suave',
-      },
-      {
-        id: '15D',
-        text: 'Si no acuerdan, Florencia hace prensa con el caso. Tiene seguidores en redes.',
-        deltas: { climate: 35, donRicardo: 32, florencia: 8 },
-        feedback:
-          'No es MAAN — es chantaje reputacional. Activás el miedo de Suavecito a la prensa pero por la peor vía. La mediación se cae y Suavecito termina iniciando una acción por daño a la imagen comercial contra Florencia.',
-        technique: 'negociador-duro',
       },
     ],
   },

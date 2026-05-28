@@ -3,7 +3,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { EmotionalState, MeetingType } from '@/lib/types';
 import Avatar from './Avatar';
-import DrPerezAvatar from './DrPerezAvatar';
 import FlorenciaAvatar from './FlorenciaAvatar';
 
 interface Props {
@@ -15,20 +14,23 @@ interface Props {
 export default function MediationStage({ state, meetingType, leaving }: Props) {
   if (meetingType === 'private-florencia') {
     return (
-      <motion.div
-        key="florencia-stage"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full h-full"
-      >
-        <FlorenciaAvatar state={state} leaving={leaving} />
-      </motion.div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key="florencia-stage"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-full h-full"
+        >
+          <FlorenciaAvatar state={state} leaving={leaving} />
+        </motion.div>
+      </AnimatePresence>
     );
   }
 
-  // Conjunta o privada con Suavecito: Don Ricardo + Dr. Pérez lado a lado
+  // Conjunta o privada con Suavecito: solo Don Ricardo en el escenario.
+  // El Dr. Pérez sigue interviniendo en el DialogueBox cuando le toca hablar.
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -37,14 +39,9 @@ export default function MediationStage({ state, meetingType, leaving }: Props) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full h-full flex flex-col md:flex-row gap-2 md:gap-3"
+        className="w-full h-full"
       >
-        <div className="flex-1 min-h-0">
-          <Avatar state={state} meetingType={meetingType} leaving={leaving} />
-        </div>
-        <div className="flex-1 min-h-0">
-          <DrPerezAvatar state={state} meetingType={meetingType} leaving={leaving} />
-        </div>
+        <Avatar state={state} meetingType={meetingType} leaving={leaving} />
       </motion.div>
     </AnimatePresence>
   );
