@@ -1,15 +1,26 @@
 'use client';
 import { useState, useCallback } from 'react';
 import { PHASES } from './phases';
-import { Decision, GameMode } from './types';
+import { Decision, GameMode, GameOverReason, Meters } from './types';
+
+const INITIAL_METERS: Meters = {
+  climate: 25,
+  donRicardo: 30,
+  florencia: 20,
+};
+
+function clamp(n: number): number {
+  return Math.max(0, Math.min(100, n));
+}
 
 export function useGameState(mode: GameMode) {
   const [currentPhaseIdx, setCurrentPhaseIdx] = useState(0);
-  const [anger, setAnger] = useState(30);
+  const [meters, setMeters] = useState<Meters>(INITIAL_METERS);
   const [decisions, setDecisions] = useState<Decision[]>([]);
   const [showFeedback, setShowFeedback] = useState(false);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [gameOver, setGameOver] = useState(false);
+  const [gameOverReason, setGameOverReason] = useState<GameOverReason>(null);
   const [finished, setFinished] = useState(false);
 
   const currentPhase = PHASES[currentPhaseIdx];
@@ -18,18 +29,36 @@ export function useGameState(mode: GameMode) {
     (optionId: string) => {
       const option = currentPhase.options.find((o) => o.id === optionId);
       if (!option) return;
-      const angerBefore = anger;
-      const angerAfter = Math.max(0, Math.min(100, anger + option.angerDelta));
-      setAnger(angerAfter);
+      const before: Meters = { ...meters };
+      const after: Meters = {
+        climate: clamp(meters.climate + option.deltas.climate),
+        donRicardo: clamp(meters.donRicardo + option.deltas.donRicardo),
+        florencia: clamp(meters.florencia + option.deltas.florencia),
+      };
+      setMeters(after);
       setSelectedOptionId(optionId);
       setShowFeedback(true);
       setDecisions((d) => [
         ...d,
-        { phaseId: currentPhase.id, optionId, angerBefore, angerAfter },
+        {
+          phaseId: currentPhase.id,
+          optionId,
+          metersBefore: before,
+          metersAfter: after,
+        },
       ]);
-      if (angerAfter >= 100) setGameOver(true);
+      if (after.climate >= 100) {
+        setGameOver(true);
+        setGameOverReason('climate');
+      } else if (after.donRicardo >= 100) {
+        setGameOver(true);
+        setGameOverReason('donRicardo');
+      } else if (after.florencia >= 100) {
+        setGameOver(true);
+        setGameOverReason('florencia');
+      }
     },
-    [anger, currentPhase]
+    [meters, currentPhase]
   );
 
   const nextPhase = useCallback(() => {
@@ -46,11 +75,12 @@ export function useGameState(mode: GameMode) {
     mode,
     currentPhase,
     currentPhaseIdx,
-    anger,
+    meters,
     decisions,
     showFeedback,
     selectedOptionId,
     gameOver,
+    gameOverReason,
     finished,
     chooseOption,
     nextPhase,

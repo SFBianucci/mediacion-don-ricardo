@@ -1,20 +1,31 @@
 export const CASE_BRIEFING = {
   title: 'Florencia Gómez vs. Suavecito S.A.',
   modality: 'Audiencia de mediación prejudicial obligatoria (Ley 26.589)',
-  yourRole: 'Abogado/a de Florencia Gómez (parte requirente)',
-  opposite: {
-    donRicardo: {
+  parties: {
+    requirente: {
+      name: 'Florencia Gómez',
+      role: 'Parte requirente — consumidora',
+      profile:
+        'Compró online un colchón que no cumplió sus expectativas y ejerció el derecho de arrepentimiento dentro del plazo legal. Suavecito se lo negó.',
+    },
+    requeridoDueno: {
       name: 'Ricardo Almeyda',
       nickname: 'Don Ricardo',
       role: 'Dueño de Suavecito S.A.',
-      company:
-        'Suavecito S.A. — fabricante y vendedor online de colchones. Vende exclusivamente por e-commerce. Política comercial uniforme aplicada a todos los clientes.',
+      profile:
+        'Empresa familiar de colchones online. Vende exclusivamente por e-commerce. Política comercial uniforme aplicada a todos los clientes. Le importa el flujo de caja y la reputación.',
     },
-    drPerez: {
+    requeridoLetrado: {
       name: 'Dr. Pérez',
       role: 'Letrado patrocinante de Suavecito S.A.',
       profile:
-        'Lleva la voz técnico-jurídica del lado demandado: cláusulas, jurisprudencia, defensa procesal. Acompaña a Don Ricardo y endurece la posición cuando ve riesgo.',
+        'Voz técnico-jurídica del lado demandado: cláusulas, jurisprudencia, defensa procesal.',
+    },
+    abogadaRequirente: {
+      name: 'Dra. López',
+      role: 'Letrada patrocinante de Florencia',
+      profile:
+        'Te acompaña a vos cuando jugás en rol de abogado/a — pero la voz cantante en las fases de rol abogada/o sos vos.',
     },
   },
   facts: [
@@ -62,3 +73,26 @@ export const CASE_BRIEFING = {
     },
   },
 };
+
+// Principios del Art. 7 de la Ley 26.589 — el mediador debe enunciarlos en el discurso de apertura
+export const PRINCIPIOS_ART7 = [
+  { key: 'imparcialidad', label: 'Imparcialidad', desc: 'del mediador frente a los intereses de las partes' },
+  { key: 'voluntariedad', label: 'Voluntariedad', desc: 'de las partes para participar' },
+  { key: 'igualdad', label: 'Igualdad', desc: 'de las partes en el procedimiento' },
+  { key: 'confidencialidad', label: 'Confidencialidad', desc: 'de todo lo dicho o aportado en la mediación' },
+  { key: 'comunicacion-directa', label: 'Comunicación directa', desc: 'entre las partes en miras a la búsqueda creativa de la solución' },
+  { key: 'celeridad', label: 'Celeridad', desc: 'en función del avance de las negociaciones' },
+  { key: 'consideracion-vulnerables', label: 'Consideración especial', desc: 'de menores, personas con discapacidad y personas mayores dependientes' },
+];
+
+// Las 8 etapas estructurales del proceso (para el badge superior)
+export const PROCESO_ETAPAS = [
+  { num: 1, key: 'apertura', label: 'Discurso de apertura', desc: 'Legitimación, empowerment, principios del Art. 7 y agenda' },
+  { num: 2, key: 'conjunta-inicial', label: 'Reunión conjunta inicial', desc: 'Las partes narran. El mediador escucha activamente y parafrasea' },
+  { num: 3, key: 'privada-florencia', label: 'Reunión privada con Florencia', desc: 'Exploración de intereses reales y MAAN' },
+  { num: 4, key: 'privada-suavecito', label: 'Reunión privada con Suavecito', desc: 'Pregunta circular, agente de la realidad, abogado del diablo' },
+  { num: 5, key: 'replanteo', label: 'Replanteo del problema', desc: 'De posiciones a intereses, en reunión conjunta' },
+  { num: 6, key: 'brainstorming', label: 'Brainstorming', desc: 'Generar opciones — separar generar de decidir' },
+  { num: 7, key: 'criterios-objetivos', label: 'Criterios objetivos', desc: 'Anclar el acuerdo en normas y estándares externos' },
+  { num: 8, key: 'acuerdo', label: 'Acuerdo', desc: 'Redacción Harvard de la cláusula final' },
+];

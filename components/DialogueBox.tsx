@@ -12,13 +12,14 @@ import {
 
 interface Props {
   text: string;
-  state: EmotionalState;
+  state?: EmotionalState;
   speaker: Speaker;
+  isSituation?: boolean;
 }
 
 const TYPE_MS = 1200;
 
-export default function DialogueBox({ text, state, speaker }: Props) {
+export default function DialogueBox({ text, state, speaker, isSituation }: Props) {
   const [shown, setShown] = useState('');
   const [done, setDone] = useState(false);
 
@@ -50,27 +51,42 @@ export default function DialogueBox({ text, state, speaker }: Props) {
     }
   };
 
+  const isMediator = speaker === 'mediator';
   const stateLabel =
-    speaker === 'florencia' ? getStateNameForFlorencia(state) : getStateName(state);
+    state !== undefined && !isMediator
+      ? speaker === 'florencia'
+        ? getStateNameForFlorencia(state)
+        : getStateName(state)
+      : null;
 
   return (
     <div
       onClick={skip}
-      className="bg-bg-secondary rounded-2xl p-5 md:p-6 cursor-pointer transition hover:bg-bg-secondary/90"
+      className={`rounded-2xl p-5 md:p-6 cursor-pointer transition ${
+        isSituation
+          ? 'bg-role-mediador/10 border border-role-mediador/30 hover:bg-role-mediador/15'
+          : 'bg-bg-secondary hover:bg-bg-secondary/90'
+      }`}
       role="dialog"
-      aria-label={`Diálogo de ${speakerName(speaker)}`}
+      aria-label={isSituation ? 'Situación del mediador' : `Diálogo de ${speakerName(speaker)}`}
     >
       <div className="flex items-center gap-3 mb-3">
         <div className="w-10 h-10 rounded-full bg-bg-tertiary flex items-center justify-center text-lg">
           <MiniAvatar speaker={speaker} />
         </div>
         <div className="flex-1">
-          <div className="font-semibold text-text-primary">{speakerName(speaker)}</div>
-          <div className="text-xs text-text-tertiary">{speakerRole(speaker)}</div>
+          <div className="font-semibold text-text-primary">
+            {isSituation ? 'Situación' : speakerName(speaker)}
+          </div>
+          <div className="text-xs text-text-tertiary">
+            {isSituation ? 'Es tu turno de intervenir' : speakerRole(speaker)}
+          </div>
         </div>
-        <div className="px-2.5 py-1 rounded-md bg-bg-tertiary text-xs uppercase tracking-wider text-text-secondary">
-          {stateLabel}
-        </div>
+        {stateLabel && (
+          <div className="px-2.5 py-1 rounded-md bg-bg-tertiary text-xs uppercase tracking-wider text-text-secondary">
+            {stateLabel}
+          </div>
+        )}
       </div>
 
       <p className="text-text-primary leading-relaxed text-[15px] md:text-base min-h-[5em]">
@@ -86,6 +102,15 @@ export default function DialogueBox({ text, state, speaker }: Props) {
 }
 
 function MiniAvatar({ speaker }: { speaker: Speaker }) {
+  if (speaker === 'mediator') {
+    return (
+      <svg viewBox="0 0 40 40" className="w-9 h-9">
+        <circle cx="20" cy="20" r="20" fill="#7aa5cc" opacity="0.25" />
+        <circle cx="20" cy="20" r="13" fill="none" stroke="#7aa5cc" strokeWidth="2" />
+        <path d="M 14 20 L 20 26 L 26 14" stroke="#7aa5cc" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+  }
   if (speaker === 'donRicardo') {
     return (
       <svg viewBox="0 0 40 40" className="w-9 h-9">

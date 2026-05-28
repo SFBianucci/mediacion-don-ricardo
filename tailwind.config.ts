@@ -30,6 +30,15 @@ const config: Config = {
           'private-client': '#3aa48e',
           joint: '#5dcaa5',
         },
+        meter: {
+          climate: '#8ab4f8',
+          don: '#e89060',
+          florencia: '#d480c0',
+        },
+        role: {
+          mediador: '#7aa5cc',
+          abogada: '#d4a574',
+        },
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],

@@ -26,7 +26,7 @@ const CONFIG: Record<
   'private-suavecito': {
     label: 'Reunión privada · Suavecito',
     tooltip:
-      'Reunión privada (caucus) con Suavecito: el mediador habla aparte con Don Ricardo y Dr. Pérez para explorar intereses.',
+      'Reunión privada con Suavecito: el mediador habla aparte con Don Ricardo y Dr. Pérez para explorar intereses.',
     classes:
       'bg-badge-private/15 text-badge-private border border-badge-private/40',
     icon: 'lock',
@@ -34,7 +34,7 @@ const CONFIG: Record<
   'private-florencia': {
     label: 'Reunión privada · con tu clienta',
     tooltip:
-      'Reunión privada (caucus) con Florencia: el mediador habla aparte con tu propia clienta para alinear intereses y MAAN.',
+      'Reunión privada con Florencia: el mediador habla aparte para explorar intereses reales y MAAN.',
     classes:
       'bg-badge-private-client/15 text-badge-private-client border border-badge-private-client/40',
     icon: 'client',

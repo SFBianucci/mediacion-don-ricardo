@@ -1,13 +1,14 @@
 'use client';
-import { Decision, GameMode } from './types';
+import { Decision, GameMode, GameOverReason, Meters } from './types';
 
 const KEY = 'mediacion-result';
 
 export interface SavedResult {
   mode: GameMode;
-  anger: number;
+  meters: Meters;
   decisions: Decision[];
   gameOver: boolean;
+  gameOverReason: GameOverReason;
 }
 
 export function saveResult(data: SavedResult) {

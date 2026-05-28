@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { CASE_BRIEFING } from '@/lib/case';
+import { CASE_BRIEFING, PROCESO_ETAPAS } from '@/lib/case';
 import { GameMode } from '@/lib/types';
 import { clearResult } from '@/lib/storage';
 
@@ -60,44 +60,77 @@ export default function HomePage() {
 
         <Block label="Tu rol">
           <p className="text-text-secondary leading-relaxed">
-            Sos <strong className="text-text-primary">{CASE_BRIEFING.yourRole}</strong>.
-            Del otro lado de la mesa están{' '}
+            La mediación es <strong>autocomposición indirecta asistida</strong>: hay un
+            tercero que ayuda pero no decide. En el grueso del juego{' '}
+            <strong className="text-role-mediador">
+              sos el/la mediador/a — imparcial
+            </strong>
+            : hacés el discurso de apertura, conducís la reunión conjunta, convocás
+            las reuniones privadas con cada parte, indagás intereses, replanteás el
+            problema y facilitás el brainstorming. En tres fases puntuales —cuando el
+            Dr. Pérez ataca con los T&amp;C, cuando hay que tirar la propuesta de
+            cierre y al cerrar con MAAN—{' '}
+            <strong className="text-role-abogada">
+              te ponés del lado de Florencia como su abogado/a
+            </strong>
+            , aplicando el método Harvard (ni suave ni duro: duro con el problema,
+            suave con las personas).
+          </p>
+          <p className="text-text-secondary leading-relaxed mt-3">
+            Del otro lado están{' '}
             <strong className="text-text-primary">
-              {CASE_BRIEFING.opposite.donRicardo.nickname}
+              {CASE_BRIEFING.parties.requeridoDueno.nickname}
             </strong>{' '}
-            ({CASE_BRIEFING.opposite.donRicardo.role}) y{' '}
+            ({CASE_BRIEFING.parties.requeridoDueno.role}) y{' '}
             <strong className="text-text-primary">
-              {CASE_BRIEFING.opposite.drPerez.name}
+              {CASE_BRIEFING.parties.requeridoLetrado.name}
             </strong>{' '}
-            ({CASE_BRIEFING.opposite.drPerez.role}). Don Ricardo lleva el costado
-            emocional y de negocio; el Dr. Pérez aporta el blindaje técnico-jurídico.
+            ({CASE_BRIEFING.parties.requeridoLetrado.role}). La requirente es{' '}
+            <strong className="text-text-primary">
+              {CASE_BRIEFING.parties.requirente.name}
+            </strong>
+            , acompañada por su letrada.
           </p>
         </Block>
 
-        <Block label="Marco normativo central">
-          <p className="text-text-secondary leading-relaxed">
-            Art. 42 CN · Arts. 1092, 1093, 1097, 1100, 1105-1110, 1119 CCyCN · Arts. 4,
-            8 bis, 34, 37, 52 bis, 53, 55, 65 de la Ley 24.240 · Ley 26.589 (mediación
-            prejudicial obligatoria) · Ley 6.286/2020 (fuero del Consumidor CABA).
-          </p>
+        <Block label="Las 8 etapas del proceso">
+          <ul className="space-y-1.5 text-[14px] text-text-secondary leading-relaxed">
+            {PROCESO_ETAPAS.map((e) => (
+              <li key={e.key}>
+                <strong className="text-text-primary">
+                  {e.num}. {e.label}.
+                </strong>{' '}
+                <span className="text-text-tertiary">{e.desc}</span>
+              </li>
+            ))}
+          </ul>
         </Block>
 
-        <Block label="Objetivo">
+        <Block label="Los tres indicadores">
           <p className="text-text-secondary leading-relaxed">
-            Llegar a un acuerdo Harvard en <strong>15 fases</strong>: discurso de
-            apertura, reuniones conjuntas, <strong>2 caucus con Florencia</strong> (tu
-            propia clienta) y <strong>2 caucus con Suavecito</strong>, replanteo,
-            criterios objetivos, brainstorming de opciones y cierre con MAAN.
+            Vas a manejar 3 medidores en paralelo:
           </p>
-          <p className="text-text-tertiary text-sm mt-2">
-            Vas a tomar 15 decisiones. Cada una mueve el medidor de tensión: con
-            Suavecito mide el enojo de Don Ricardo y Dr. Pérez; en los caucus con
-            Florencia mide cuánto está perdiendo paciencia tu propia clienta. Si llega
-            a 100, se levanta y no hay acuerdo.
-          </p>
-          <p className="text-text-tertiary text-xs mt-3">
-            En cada fase las cuatro opciones se barajan: la &ldquo;mejor&rdquo;
-            respuesta no está siempre en la misma posición. Pensá antes de elegir.
+          <ul className="mt-2 space-y-1.5 text-[14px] text-text-secondary leading-relaxed list-disc list-outside ml-5">
+            <li>
+              <strong className="text-meter-climate">Clima del proceso</strong> — el
+              ambiente general. Sube si perdés imparcialidad, violás confidencialidad
+              o escalás como abogado/a.
+            </li>
+            <li>
+              <strong className="text-meter-don">Don Ricardo</strong> — cómo se siente
+              el dueño de Suavecito. Sube con malos parafraseos, acusaciones o
+              presión.
+            </li>
+            <li>
+              <strong className="text-meter-florencia">Florencia</strong> — cómo se
+              siente la requirente. Sube si la subestimás, la mal informás o le
+              ignorás el interés real.
+            </li>
+          </ul>
+          <p className="text-text-tertiary text-sm mt-3">
+            Son 15 decisiones a lo largo de las 8 etapas. Si cualquiera de los tres
+            medidores llega a 100, la mediación se cae. Cada fase baraja sus 4
+            opciones: la mejor respuesta no está siempre en la misma posición.
           </p>
         </Block>
       </motion.section>
@@ -117,7 +150,7 @@ export default function HomePage() {
           <ModeCard
             title="Aprendizaje"
             icon="📘"
-            description="Te muestro el principio Harvard y el tipo de pregunta ANTES de elegir. Ideal para entender el método mientras jugás."
+            description="Te muestro la herramienta o el estilo de cada opción ANTES de elegir (pregunta abierta, parafraseo, agente de la realidad, Harvard, negociador duro…). Ideal para entender el método mientras jugás."
             cta="Empezar en modo Aprendizaje"
             onClick={() => start('learning')}
             accent="brand-warm"

@@ -6,7 +6,15 @@ import { motion } from 'framer-motion';
 
 import { loadResult, SavedResult } from '@/lib/storage';
 import { PHASES } from '@/lib/phases';
-import { getEmotionalState, getStateName } from '@/lib/types';
+import {
+  GameOverReason,
+  Meters,
+  getEmotionalState,
+  maxMeter,
+  playerRoleShort,
+  stageName,
+  techniqueLabel,
+} from '@/lib/types';
 
 type Outcome = {
   title: string;
@@ -15,30 +23,55 @@ type Outcome = {
   icon: string;
 };
 
-function outcomeFor(anger: number, gameOver: boolean): Outcome {
-  if (gameOver || anger >= 100) {
+function outcomeFor(
+  meters: Meters,
+  gameOver: boolean,
+  reason: GameOverReason
+): Outcome {
+  if (gameOver) {
+    if (reason === 'climate') {
+      return {
+        title: 'La mediación se cayó por el clima',
+        summary:
+          'El ambiente se rompió: perdiste imparcialidad, violaste confidencialidad o forzaste la mano. Las partes ya no confían en el proceso. Queda habilitada la vía judicial: fuero del Consumidor de CABA (Ley 6.286/2020), gratuito por Art. 53 LDC.',
+        tone: 'red',
+        icon: '✗',
+      };
+    }
+    if (reason === 'donRicardo') {
+      return {
+        title: 'Don Ricardo se levantó de la mesa',
+        summary:
+          'Don Ricardo perdió la paciencia. Sintió que fue acusado, presionado o que la mediación no era imparcial. Sin acuerdo, Florencia queda habilitada para iniciar demanda con pedido de daño punitivo (Art. 52 bis LDC).',
+        tone: 'red',
+        icon: '✗',
+      };
+    }
     return {
-      title: 'Negociación fracasada',
+      title: 'Florencia se retiró sin acuerdo',
       summary:
-        'La mediación se cayó. Queda habilitada la vía judicial: demanda en el fuero del Consumidor de CABA (Ley 6.286/2020), gratuita para Florencia por el Art. 53 LDC, con pedido de daño punitivo (Art. 52 bis LDC) y nulidad de la cláusula 7.3 por abusiva (Art. 37 LDC, Art. 1119 CCyCN).',
+        'Florencia perdió la confianza —en el mediador, en su propio abogado o en la propuesta sobre la mesa. La mediación cierra sin acuerdo. El acta habilita la vía judicial.',
       tone: 'red',
       icon: '✗',
     };
   }
-  if (anger <= 35) {
+
+  const { value: maxVal } = maxMeter(meters);
+
+  if (maxVal <= 35) {
     return {
       title: 'Acuerdo colaborativo (gana-gana)',
       summary:
-        'Suavecito reintegró el capital íntegro a la tarjeta, asumió la logística inversa y se comprometió a revisar la cláusula 7.3. Florencia desistió del daño punitivo. Harvard puro: separaste persona y problema, comunicaste intereses, brainstorming de opciones, criterios objetivos y MAAN comunicada con firmeza.',
+        'Aplicaste Harvard de punta a punta. Suavecito reintegra el capital íntegro a la tarjeta, asume la logística inversa y se compromete a revisar la cláusula 7.3 a futuro. Florencia desiste del daño punitivo. Las partes salen con la relación intacta y el acuerdo es ejecutable.',
       tone: 'green',
       icon: '✓',
     };
   }
-  if (anger <= 70) {
+  if (maxVal <= 60) {
     return {
       title: 'Acuerdo parcial',
       summary:
-        'Algo se firma: hubo reintegro pero con costos repartidos o plazos largos, y la cláusula 7.3 quedó intacta para futuros consumidores. Funciona en lo práctico, pero no es un acuerdo Harvard — quedó clima de regateo posicional.',
+        'Algo se firma. Hubo reintegro pero con costos repartidos, plazos largos o cláusula 7.3 intacta. Funciona en lo práctico pero no es un acuerdo Harvard — quedó clima de regateo posicional.',
       tone: 'yellow',
       icon: '≈',
     };
@@ -46,7 +79,7 @@ function outcomeFor(anger: number, gameOver: boolean): Outcome {
   return {
     title: 'Acuerdo precario',
     summary:
-      'La firma se cerró a regañadientes, con tensión instalada y la sensación de haber cedido bajo presión. Alta probabilidad de incumplimiento o pedido de revisión. La mediación cerró pero el conflicto sigue vivo.',
+      'La firma se cerró a regañadientes, con tensión instalada y sensación de haber cedido bajo presión. Alta probabilidad de incumplimiento. La mediación cerró pero el conflicto sigue vivo.',
     tone: 'orange',
     icon: '!',
   };
@@ -58,6 +91,11 @@ const TONE_CLASSES = {
   orange: 'text-orange-400 bg-orange-400/10 border-orange-400/30',
   red: 'text-brand-angry bg-brand-angry/10 border-brand-angry/40',
 };
+
+function meterColor(value: number): string {
+  const state = getEmotionalState(value);
+  return ['text-brand-calm', 'text-green-300', 'text-yellow-300', 'text-orange-400', 'text-brand-angry'][state];
+}
 
 export default function ResultPage() {
   const router = useRouter();
@@ -76,8 +114,7 @@ export default function ResultPage() {
     return <main className="p-10 text-text-tertiary">Cargando…</main>;
   }
 
-  const outcome = outcomeFor(data.anger, data.gameOver);
-  const state = getEmotionalState(data.anger);
+  const outcome = outcomeFor(data.meters, data.gameOver, data.gameOverReason);
   const playedPhases = PHASES.slice(0, data.decisions.length);
 
   const downloadSummary = () => {
@@ -86,8 +123,10 @@ export default function ResultPage() {
     lines.push('Caso: Gómez c/ Suavecito S.A. — UADE, Resolución de Controversias, 1C 2026');
     lines.push('');
     lines.push(`Modo: ${data.mode === 'learning' ? 'Aprendizaje' : 'Examen'}`);
-    lines.push(`Enojo final: ${data.anger} / 100 (${getStateName(state)})`);
     lines.push(`Resultado: ${outcome.title}`);
+    lines.push(
+      `Estado final → Clima: ${data.meters.climate} | Don Ricardo: ${data.meters.donRicardo} | Florencia: ${data.meters.florencia}`
+    );
     lines.push('');
     lines.push(outcome.summary);
     lines.push('');
@@ -99,11 +138,18 @@ export default function ResultPage() {
       if (!phase || !option) return;
       lines.push('');
       lines.push(`Fase ${phase.id} — ${phase.title}`);
-      lines.push(`Principio Harvard: ${phase.harvardPrinciple}`);
+      lines.push(`Etapa: ${stageName(phase.stage)} · Rol: ${playerRoleShort(phase.playerRole)}`);
+      if (option.technique) lines.push(`Técnica: ${techniqueLabel(option.technique)}`);
       lines.push(`Elegiste ${option.id}: "${option.text}"`);
       lines.push(`Feedback: ${option.feedback}`);
       lines.push(
-        `Enojo: ${d.angerBefore} → ${d.angerAfter}  (Δ ${option.angerDelta > 0 ? '+' : ''}${option.angerDelta})`
+        `Clima: ${d.metersBefore.climate} → ${d.metersAfter.climate}  (Δ ${option.deltas.climate > 0 ? '+' : ''}${option.deltas.climate})`
+      );
+      lines.push(
+        `Don Ricardo: ${d.metersBefore.donRicardo} → ${d.metersAfter.donRicardo}  (Δ ${option.deltas.donRicardo > 0 ? '+' : ''}${option.deltas.donRicardo})`
+      );
+      lines.push(
+        `Florencia: ${d.metersBefore.florencia} → ${d.metersAfter.florencia}  (Δ ${option.deltas.florencia > 0 ? '+' : ''}${option.deltas.florencia})`
       );
       lines.push(`Mejor opción: ${option.isBest ? 'SÍ' : 'NO'}`);
     });
@@ -125,20 +171,19 @@ export default function ResultPage() {
         transition={{ duration: 0.5 }}
       >
         <div className="text-text-tertiary text-xs uppercase tracking-[0.2em] mb-3">
-          Resultado de la negociación
+          Resultado de la mediación
         </div>
 
-        <div
-          className={`rounded-2xl border p-6 md:p-8 mb-8 ${TONE_CLASSES[outcome.tone]}`}
-        >
+        <div className={`rounded-2xl border p-6 md:p-8 mb-6 ${TONE_CLASSES[outcome.tone]}`}>
           <div className="text-5xl mb-3 font-light">{outcome.icon}</div>
           <h1 className="text-2xl md:text-3xl font-bold mb-3">{outcome.title}</h1>
-          <p className="text-text-secondary leading-relaxed mb-4">{outcome.summary}</p>
-          <div className="text-sm text-text-tertiary">
-            Enojo final:{' '}
-            <span className="text-text-primary font-semibold">{data.anger} / 100</span>{' '}
-            ({getStateName(state)})
-          </div>
+          <p className="text-text-secondary leading-relaxed">{outcome.summary}</p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-3 mb-8">
+          <MeterFinal label="Clima" value={data.meters.climate} />
+          <MeterFinal label="Don Ricardo" value={data.meters.donRicardo} />
+          <MeterFinal label="Florencia" value={data.meters.florencia} />
         </div>
       </motion.div>
 
@@ -150,7 +195,7 @@ export default function ResultPage() {
         transition={{ duration: 0.5, delay: 0.15 }}
       >
         <div className="text-text-tertiary text-xs uppercase tracking-[0.18em] mb-4">
-          Tus decisiones (trazabilidad Harvard)
+          Tus decisiones (trazabilidad)
         </div>
 
         <ol className="space-y-4">
@@ -159,8 +204,6 @@ export default function ResultPage() {
             if (!decision) return null;
             const option = phase.options.find((o) => o.id === decision.optionId);
             if (!option) return null;
-            const delta = option.angerDelta;
-            const sign = delta > 0 ? '+' : '';
 
             return (
               <li
@@ -184,19 +227,16 @@ export default function ResultPage() {
                         Fase {phase.id}
                       </span>
                       <h3 className="text-text-primary font-semibold">{phase.title}</h3>
-                      {phase.meetingType === 'private-suavecito' && (
-                        <span className="text-[10px] uppercase tracking-wider text-badge-private bg-badge-private/15 px-1.5 py-0.5 rounded">
-                          caucus · Suavecito
-                        </span>
-                      )}
-                      {phase.meetingType === 'private-florencia' && (
-                        <span className="text-[10px] uppercase tracking-wider text-badge-private-client bg-badge-private-client/15 px-1.5 py-0.5 rounded">
-                          caucus · Florencia
-                        </span>
-                      )}
                     </div>
-                    <div className="text-text-tertiary text-xs mb-2">
-                      Principio: {phase.harvardPrinciple}
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-text-tertiary mb-2">
+                      <span>📍 {stageName(phase.stage)}</span>
+                      <span>
+                        {phase.playerRole === 'mediador' ? '🎯' : '⚖️'}{' '}
+                        {playerRoleShort(phase.playerRole)}
+                      </span>
+                      {option.technique && (
+                        <span>🔧 {techniqueLabel(option.technique)}</span>
+                      )}
                     </div>
 
                     <div className="text-text-secondary text-sm mb-2">
@@ -208,20 +248,25 @@ export default function ResultPage() {
                       {option.feedback}
                     </p>
 
-                    <div className="text-xs text-text-tertiary mt-2">
-                      Enojo: {decision.angerBefore} → {decision.angerAfter}{' '}
-                      <span
-                        className={
-                          delta < 0
-                            ? 'text-brand-calm font-semibold'
-                            : delta > 8
-                              ? 'text-brand-angry font-semibold'
-                              : 'text-brand-warm font-semibold'
-                        }
-                      >
-                        ({sign}
-                        {delta})
-                      </span>
+                    <div className="text-xs text-text-tertiary mt-2 grid grid-cols-3 gap-2">
+                      <DeltaCell
+                        label="Clima"
+                        delta={option.deltas.climate}
+                        before={decision.metersBefore.climate}
+                        after={decision.metersAfter.climate}
+                      />
+                      <DeltaCell
+                        label="D. Ricardo"
+                        delta={option.deltas.donRicardo}
+                        before={decision.metersBefore.donRicardo}
+                        after={decision.metersAfter.donRicardo}
+                      />
+                      <DeltaCell
+                        label="Florencia"
+                        delta={option.deltas.florencia}
+                        before={decision.metersBefore.florencia}
+                        after={decision.metersAfter.florencia}
+                      />
                     </div>
                   </div>
                 </div>
@@ -256,5 +301,52 @@ export default function ResultPage() {
         <em>Gómez c/ Suavecito S.A.</em>
       </footer>
     </main>
+  );
+}
+
+function MeterFinal({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="bg-bg-secondary border border-bg-accent rounded-xl p-3 text-center">
+      <div className="text-text-tertiary text-[10px] uppercase tracking-wider mb-1">
+        {label}
+      </div>
+      <div className={`text-2xl font-bold tabular-nums ${meterColor(value)}`}>
+        {Math.round(value)}
+      </div>
+    </div>
+  );
+}
+
+function DeltaCell({
+  label,
+  delta,
+  before,
+  after,
+}: {
+  label: string;
+  delta: number;
+  before: number;
+  after: number;
+}) {
+  const sign = delta > 0 ? '+' : '';
+  const colorClass =
+    delta < 0
+      ? 'text-brand-calm'
+      : delta > 10
+        ? 'text-brand-angry'
+        : delta > 0
+          ? 'text-brand-warm'
+          : 'text-text-tertiary';
+  return (
+    <div>
+      <span className="text-text-tertiary uppercase tracking-wider mr-1">{label}:</span>
+      <span className={`font-semibold ${colorClass}`}>
+        {sign}
+        {delta}
+      </span>
+      <span className="text-text-tertiary/70 ml-1">
+        ({before}→{after})
+      </span>
+    </div>
   );
 }

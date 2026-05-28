@@ -2,25 +2,15 @@
 
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { GameMode, Option, QuestionType } from '@/lib/types';
+import { GameMode, Option, techniqueLabel } from '@/lib/types';
 
 interface Props {
   options: Option[];
   phaseId: number;
   mode: GameMode;
-  harvardPrinciple: string;
   selectedId: string | null;
   disabled: boolean;
   onChoose: (id: string) => void;
-}
-
-function questionTypeLabel(t: QuestionType): string {
-  return {
-    circular: 'Pregunta circular',
-    open: 'Pregunta abierta',
-    closed: 'Pregunta cerrada',
-    statement: 'Afirmación / acusación',
-  }[t];
 }
 
 function shuffle<T>(arr: T[]): T[] {
@@ -36,20 +26,18 @@ export default function OptionsPanel({
   options,
   phaseId,
   mode,
-  harvardPrinciple,
   selectedId,
   disabled,
   onChoose,
 }: Props) {
-  // Shuffle estable por fase: el orden se baraja al entrar y se mantiene durante la fase.
-  // Intencionalmente solo dependemos de phaseId para evitar re-barajar en re-renders del padre.
+  // Shuffle estable por fase
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const displayOptions = useMemo(() => shuffle(options), [phaseId]);
 
   return (
     <div className="space-y-2.5">
       <div className="text-text-tertiary text-xs uppercase tracking-wider mb-1">
-        Elegí tu respuesta
+        Elegí tu intervención
       </div>
       {displayOptions.map((opt, idx) => {
         const isSelected = selectedId === opt.id;
@@ -81,9 +69,9 @@ export default function OptionsPanel({
                 <p className="text-text-primary text-[14px] md:text-[15px] leading-relaxed">
                   {opt.text}
                 </p>
-                {mode === 'learning' && (
+                {mode === 'learning' && opt.technique && (
                   <p className="text-text-tertiary text-xs mt-2 italic">
-                    → {opt.questionType ? questionTypeLabel(opt.questionType) : harvardPrinciple}
+                    → {techniqueLabel(opt.technique)}
                   </p>
                 )}
               </div>

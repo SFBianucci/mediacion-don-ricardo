@@ -20,15 +20,15 @@ interface ModalContent {
 
 const CONTENT: Record<Exclude<MeetingType, 'joint'>, ModalContent> = {
   'private-suavecito': {
-    title: 'Caucus con Suavecito',
-    body: 'El mediador convoca ahora a una reunión privada con Don Ricardo y Dr. Pérez. Es el espacio para explorar intereses y poner a prueba la posición de la otra parte sin público.',
+    title: 'Reunión privada con Suavecito',
+    body: 'Don Ricardo y el Dr. Pérez quedan solos con vos. Florencia esperó afuera. Es el espacio para explorar intereses reales con preguntas circulares, agente de la realidad o abogado del diablo. Lo que se diga acá es confidencial.',
     borderClass: 'border-badge-private/40',
     bgIconClass: 'bg-badge-private/20',
     iconColorClass: 'text-badge-private',
   },
   'private-florencia': {
-    title: 'Caucus con tu clienta',
-    body: 'Reunión privada con Florencia. Acá tu trabajo es alinear con ella su interés real, evaluar honestamente la MAAN y conseguir mandato claro para volver a la mesa conjunta.',
+    title: 'Reunión privada con Florencia',
+    body: 'Florencia y su abogada quedan solas con vos. Suavecito esperó afuera. Acá explorás interés real, evaluás honestamente la MAAN, y la ayudás a tomar decisiones informadas. Lo que se diga acá es confidencial.',
     borderClass: 'border-badge-private-client/40',
     bgIconClass: 'bg-badge-private-client/20',
     iconColorClass: 'text-badge-private-client',
