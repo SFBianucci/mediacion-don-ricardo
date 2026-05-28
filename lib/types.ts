@@ -6,7 +6,7 @@ export type MeetingType = 'joint' | 'private-suavecito' | 'private-florencia';
 
 export type Speaker = 'donRicardo' | 'drPerez' | 'florencia' | 'mediator';
 
-export type PlayerRole = 'mediador' | 'abogada';
+export type PlayerRole = 'mediador' | 'abogada' | 'florencia';
 
 export type MediationStage =
   | 'apertura'
@@ -43,7 +43,11 @@ export type Technique =
   | 'perdida-imparcialidad'
   | 'violacion-confidencialidad'
   | 'acusacion'
-  | 'carga-emocional';
+  | 'carga-emocional'
+  // Procesal y emocional
+  | 'tecnica-procesal'
+  | 'gestion-emocional'
+  | 'reaccion-impulsiva';
 
 export interface Deltas {
   climate: number;
@@ -63,6 +67,7 @@ export interface Option {
   deltas: Deltas;
   feedback: string;
   isBest?: boolean;
+  leastBad?: boolean;
   technique?: Technique;
 }
 
@@ -76,6 +81,7 @@ export interface Phase {
   speakerLine?: string; // diálogo de la otra parte
   situation?: string; // descripción cuando el mediador interviene (speaker === 'mediator')
   privateContext?: string;
+  entryDeltas?: Deltas; // se aplican al ENTRAR a la fase (ej. Don Ricardo se enoja solo)
   options: Option[];
 }
 
@@ -131,13 +137,19 @@ export function speakerRole(speaker: Speaker): string {
 }
 
 export function playerRoleLabel(role: PlayerRole): string {
-  return role === 'mediador'
-    ? 'Sos el/la mediador/a — imparcial'
-    : 'Sos abogado/a de Florencia';
+  return {
+    mediador: 'Sos el/la mediador/a — imparcial',
+    abogada: 'Sos abogado/a de Florencia',
+    florencia: 'Sos Florencia — la parte requirente',
+  }[role];
 }
 
 export function playerRoleShort(role: PlayerRole): string {
-  return role === 'mediador' ? 'Mediador/a' : 'Abogado/a de Florencia';
+  return {
+    mediador: 'Mediador/a',
+    abogada: 'Abogado/a de Florencia',
+    florencia: 'Florencia (la parte)',
+  }[role];
 }
 
 const STAGE_NAMES: Record<MediationStage, string> = {
@@ -195,6 +207,9 @@ const TECHNIQUE_LABELS: Record<Technique, string> = {
   'violacion-confidencialidad': 'Violación de confidencialidad',
   acusacion: 'Acusación',
   'carga-emocional': 'Carga emocional',
+  'tecnica-procesal': 'Manejo procesal',
+  'gestion-emocional': 'Gestión emocional',
+  'reaccion-impulsiva': 'Reacción impulsiva',
 };
 
 export function techniqueLabel(t: Technique): string {

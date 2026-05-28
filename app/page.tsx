@@ -65,16 +65,17 @@ export default function HomePage() {
             <strong className="text-role-mediador">
               sos el/la mediador/a — imparcial
             </strong>
-            : hacés el discurso de apertura, conducís la reunión conjunta, convocás
-            las reuniones privadas con cada parte, indagás intereses, replanteás el
-            problema y facilitás el brainstorming. En tres fases puntuales —cuando el
-            Dr. Pérez ataca con los T&amp;C, cuando hay que tirar la propuesta de
-            cierre y al cerrar con MAAN—{' '}
+            : resolvés el planteo procesal de apertura, conducís la reunión conjunta,
+            convocás las reuniones privadas con cada parte, indagás intereses,
+            replanteás el problema y facilitás el brainstorming. En algunas fases{' '}
             <strong className="text-role-abogada">
               te ponés del lado de Florencia como su abogado/a
-            </strong>
-            , aplicando el método Harvard (ni suave ni duro: duro con el problema,
-            suave con las personas).
+            </strong>{' '}
+            (cuando el Dr. Pérez ataca con los T&amp;C y cuando hay que tirar la
+            propuesta de cierre), aplicando el método Harvard. Y en un momento{' '}
+            <strong className="text-meter-florencia">sos la propia Florencia</strong>{' '}
+            y reaccionás como la persona: ahí vas a ver que el método no siempre
+            alcanza.
           </p>
           <p className="text-text-secondary leading-relaxed mt-3">
             Del otro lado están{' '}
@@ -128,11 +129,12 @@ export default function HomePage() {
             </li>
           </ul>
           <p className="text-text-tertiary text-sm mt-3">
-            Son 10 decisiones a lo largo del proceso. Si cualquiera de los tres
+            Son 12 decisiones a lo largo del proceso. Si cualquiera de los tres
             medidores llega a 100, la mediación se cae. Cada fase baraja sus 4
             opciones: la mejor respuesta no está siempre en la misma posición, y
             las distractoras suenan razonables — la diferencia está en sutilezas.
-            Al final, si llegás a acuerdo, vas a leer el acta firmada con sus
+            Hay momentos sin respuesta perfecta, donde solo podés elegir la menos
+            mala. Al final, si llegás a acuerdo, vas a leer el acta firmada con sus
             cláusulas.
           </p>
         </Block>

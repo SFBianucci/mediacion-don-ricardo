@@ -215,11 +215,19 @@ export default function ResultPage() {
                     className={`flex-shrink-0 w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold ${
                       option.isBest
                         ? 'bg-brand-calm/20 text-brand-calm'
-                        : 'bg-brand-angry/15 text-brand-angry'
+                        : option.leastBad
+                          ? 'bg-brand-warm/20 text-brand-warm'
+                          : 'bg-brand-angry/15 text-brand-angry'
                     }`}
-                    aria-label={option.isBest ? 'Mejor opción' : 'No fue la mejor'}
+                    aria-label={
+                      option.isBest
+                        ? 'Mejor opción'
+                        : option.leastBad
+                          ? 'La menos mala'
+                          : 'No fue la mejor'
+                    }
                   >
-                    {option.isBest ? '✓' : '✗'}
+                    {option.isBest ? '✓' : option.leastBad ? '≈' : '✗'}
                   </span>
                   <div className="flex-1">
                     <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 mb-1">

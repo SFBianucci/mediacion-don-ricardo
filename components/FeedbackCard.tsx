@@ -64,6 +64,8 @@ export default function FeedbackCard({
       <div className="flex items-center gap-3 mb-3">
         {option.isBest ? (
           <span className="text-brand-calm font-semibold text-sm">✓ Mejor elección</span>
+        ) : option.leastBad ? (
+          <span className="text-brand-warm font-semibold text-sm">≈ La menos mala</span>
         ) : (
           <span className="text-text-tertiary font-medium text-sm">Tu elección</span>
         )}

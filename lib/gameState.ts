@@ -1,5 +1,5 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { PHASES } from './phases';
 import { Decision, GameMode, GameOverReason, Meters } from './types';
 
@@ -26,6 +26,21 @@ export function useGameState(mode: GameMode) {
   const [lastChoiceId, setLastChoiceId] = useState<string | null>(null);
 
   const currentPhase = PHASES[currentPhaseIdx];
+  const entryAppliedRef = useRef<Set<number>>(new Set());
+
+  // Aplicar entryDeltas al entrar a una fase (una sola vez por fase).
+  // No dispara game-over: la "explosión" es el setup, no el final.
+  useEffect(() => {
+    const phase = PHASES[currentPhaseIdx];
+    if (!phase.entryDeltas) return;
+    if (entryAppliedRef.current.has(phase.id)) return;
+    entryAppliedRef.current.add(phase.id);
+    setMeters((m) => ({
+      climate: clamp(m.climate + phase.entryDeltas!.climate),
+      donRicardo: clamp(m.donRicardo + phase.entryDeltas!.donRicardo),
+      florencia: clamp(m.florencia + phase.entryDeltas!.florencia),
+    }));
+  }, [currentPhaseIdx]);
 
   const chooseOption = useCallback(
     (optionId: string) => {

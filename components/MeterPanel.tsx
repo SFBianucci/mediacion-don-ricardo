@@ -105,7 +105,7 @@ export default function MeterPanel({ meters, meetingType }: Props) {
         <Meter
           value={meters.donRicardo}
           heading="D. Ricardo"
-          subhead="Suavecito"
+          subhead="requerido"
           label={getStateName(donState)}
           palette="don"
           dim={inPrivateFlorencia}

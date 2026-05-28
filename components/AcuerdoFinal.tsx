@@ -42,9 +42,9 @@ function formatHoy(): string {
 }
 
 export default function AcuerdoFinal({ optionId, onContinue }: Props) {
-  // Mapeo del id de opción de la fase 10 (que viene como '10A'..'10D') al id de variante 'mb-A'..'mb-D'.
+  // Mapeo del id de opción de la fase de mutuo beneficio ('12A'..'12D') al id de variante 'mb-A'..'mb-D'.
   const variantKey = optionId
-    ? `mb-${optionId.replace(/^10/, '')}`
+    ? `mb-${optionId.replace(/^\d+/, '')}`
     : 'mb-D';
   const variante = ACUERDO_VARIANTES[variantKey] ?? ACUERDO_VARIANTES['mb-D'];
   const fecha = formatHoy();

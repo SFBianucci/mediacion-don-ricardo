@@ -17,12 +17,17 @@ Florencia Gómez compró un colchón online por $980.000 el 2 de mayo. Lo recibi
 - **MAAN de Florencia**: demanda en el fuero del Consumidor de CABA (Ley 6.286/2020), gratuita por Art. 53 LDC. Fuerte en el fondo, débil en el tiempo.
 - **MAAN de Suavecito**: ir a juicio y exponerse a nulidad firme de la cláusula 7.3, con efecto sobre otros clientes.
 
-## Doble rol del jugador
+## Triple rol del jugador
 
-El refactor central del juego: a lo largo de las 15 fases jugás dos roles distintos.
+A lo largo de las 12 fases jugás tres roles distintos:
 
-- **12 fases como mediador/a — imparcial**. Hacés el discurso de apertura (legitimación, empowerment, principios del Art. 7), conducís la reunión conjunta inicial con preguntas abiertas y parafraseo, convocás las reuniones privadas con cada parte para indagar intereses (preguntas cerradas y circulares, agente de la realidad, abogado del diablo), replanteás el problema de posiciones a intereses, facilitás el brainstorming, anclás el acuerdo en criterios objetivos.
-- **3 fases como abogado/a de Florencia** (fases 6, 13 y 15). Momentos picantes donde te ponés del lado de la requirente y aplicás el método Harvard (ni suave ni duro: duro con el problema, suave con las personas). Te toca cuando el Dr. Pérez ataca con los T&C, cuando hay que tirar la propuesta de cierre y al cerrar con MAAN comunicada con firmeza.
+- **Mediador/a** (la mayoría de las fases) — imparcial. Resolvés un planteo procesal de apertura (la trampa de la notificación), conducís la reunión conjunta inicial con preguntas abiertas y parafraseo, convocás las reuniones privadas con cada parte para indagar intereses (preguntas cerradas y circulares, agente de la realidad, abogado del diablo), replanteás el problema de posiciones a intereses, facilitás el brainstorming.
+- **Abogado/a de Florencia** — momentos picantes donde te ponés del lado de la requirente y aplicás el método Harvard (ni suave ni duro: duro con el problema, suave con las personas). Te toca cuando el Dr. Pérez ataca con los T&C y cuando hay que tirar la propuesta de cierre frente a un Don Ricardo en modo duro.
+- **Florencia (la propia parte)** — en una fase reaccionás como la persona, no como técnico/a: se te escapa una mueca, Don Ricardo explota (su cara se enoja sola) y ninguna opción es buena. Solo podés elegir la "menos mala". Es el momento que muestra que el método Harvard, como dice la cátedra, "a veces funciona y a veces no".
+
+## La trampa procesal
+
+La primera fase es una trampa: Don Ricardo cuestiona haber sido notificado por carta documento. La respuesta correcta exige saber que **cuando el mediador es designado por propuesta del requirente al requerido, el único medio de notificación válido es la carta documento** — así que la instancia está bien abierta. Caer (dudar de la notificación, o creer que correspondía email/cédula) penaliza fuerte el clima.
 
 ## Tres medidores
 
@@ -57,7 +62,7 @@ Errores típicos modelados: **pérdida de imparcialidad**, **violación de confi
 
 ## Sistema de juego
 
-- **10 fases** densas distribuidas en las etapas centrales del proceso (las etapas de apertura y criterios objetivos quedan documentadas como contexto, pero no son fases jugables).
+- **12 fases** densas distribuidas en las etapas del proceso (la etapa de criterios objetivos queda documentada como contexto, pero no tiene fase jugable propia).
 - En cada fase elegís 1 de 4 opciones. Las **opciones se barajan al cargar cada fase** (la mejor respuesta no está siempre en la misma posición — el orden cambia entre partidas, pero queda estable durante la fase). Las distractoras están formuladas como decisiones que un letrado/mediador razonable tomaría — la diferencia con la opción correcta está en sutilezas (timing, destinatario, formulación, imparcialidad), no en obviedades.
 - Cada opción tiene 3 deltas independientes (uno por medidor) y, en el modo Aprendizaje, su técnica/estilo se revela en el feedback (no antes de elegir — el jugador no ve "esto es agente de la realidad" en el botón, solo en el comentario posterior).
 - Si llegás al final del juego sin que ninguna barra se desborde, se firma un **acta de mediación** con cláusulas concretas (estilo documento legal) que reflejan la opción de mutuo beneficio elegida.
@@ -88,24 +93,24 @@ app/
 components/
   MeterPanel.tsx        ← 3 barras (clima, Don Ricardo, Florencia)
   StageBadge.tsx        ← etapa del proceso (1-8)
-  RoleBanner.tsx        ← rol del jugador (mediador / abogada)
+  RoleBanner.tsx        ← rol del jugador (mediador / abogada / Florencia)
   DialogueBox.tsx       ← diálogo o situación
   OptionsPanel.tsx      ← 4 opciones con shuffle estable por fase
   FeedbackCard.tsx      ← feedback + 3 deltas
   MeetingBadge.tsx      ← reunión conjunta / privada Suavecito / privada Florencia
   PrivateMeetingModal.tsx
+  AcuerdoFinal.tsx      ← acta de mediación dinámica según la opción elegida
   PhaseProgress.tsx
   Avatar/
     Avatar.tsx          ← Don Ricardo
-    DrPerezAvatar.tsx
     FlorenciaAvatar.tsx
     AvatarHead.tsx · AvatarBody.tsx · Office.tsx
     MediationStage.tsx  ← orquesta qué avatares se ven según meetingType
 
 lib/
   types.ts              ← Phase, Option, Meters, PlayerRole, MediationStage, Technique
-  case.ts               ← CASE_BRIEFING, PRINCIPIOS_ART7, PROCESO_ETAPAS
-  phases.ts             ← las 15 fases con 3 deltas por opción
+  case.ts               ← CASE_BRIEFING, PRINCIPIOS_ART7, PROCESO_ETAPAS, OPCIONES_MUTUO_BENEFICIO, ACUERDO_VARIANTES
+  phases.ts             ← las 12 fases con 3 deltas por opción
   gameState.ts          ← useGameState con 3 medidores
   storage.ts            ← sessionStorage del resultado
 ```

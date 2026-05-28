@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect } from 'react';
 import { MeetingType } from '@/lib/types';
 
 interface Props {
@@ -36,12 +35,6 @@ const CONTENT: Record<Exclude<MeetingType, 'joint'>, ModalContent> = {
 };
 
 export default function PrivateMeetingModal({ open, meetingType, onClose }: Props) {
-  useEffect(() => {
-    if (!open) return;
-    const t = setTimeout(onClose, 3600);
-    return () => clearTimeout(t);
-  }, [open, onClose]);
-
   const content = meetingType === 'joint' ? null : CONTENT[meetingType];
 
   return (
@@ -73,9 +66,9 @@ export default function PrivateMeetingModal({ open, meetingType, onClose }: Prop
             <button
               type="button"
               onClick={onClose}
-              className="mt-5 text-xs text-text-tertiary hover:text-text-secondary"
+              className="mt-6 px-6 py-2.5 rounded-xl bg-brand-warm text-bg-primary font-semibold hover:opacity-90 transition"
             >
-              Entendido
+              Continuar →
             </button>
           </motion.div>
         </motion.div>
