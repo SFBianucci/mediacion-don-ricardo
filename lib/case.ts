@@ -97,7 +97,7 @@ export const PROCESO_ETAPAS = [
   { num: 8, key: 'acuerdo', label: 'Acuerdo', desc: 'Redacción Harvard de la cláusula final' },
 ];
 
-// Las 4 opciones de mutuo beneficio del PDF del TP (fase 10 de brainstorming)
+// Las 4 opciones de mutuo beneficio del PDF del TP (fase 11 de brainstorming)
 // La opción D es la Harvard plena (gana-gana) — combina los intereses reales de ambas partes.
 export const OPCIONES_MUTUO_BENEFICIO = [
   {
@@ -118,7 +118,7 @@ export const OPCIONES_MUTUO_BENEFICIO = [
   },
 ];
 
-// Cláusulas del acuerdo final, condicionadas a la opción elegida en la fase 10.
+// Cláusulas del acuerdo final, condicionadas a la opción elegida en la fase 11.
 // Cada entrada describe cómo queda redactado el acuerdo según la elección del jugador.
 export interface AcuerdoVariante {
   tono: 'colaborativo' | 'parcial' | 'subóptimo' | 'precario';
